@@ -8,11 +8,12 @@
     <script src="../static/angularController.js"></script>
     <style>
     .inputs{
+    font-family: candara, sans-serif;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
-    background-color: #66b3ff;
+    background-color: #8080ff;
     border-style: none;
     margin:10px;
-    padding: 5px ;
+    padding: 5px;
     border-width: 0.5px;
     text-align: center;
     overflow: auto;
@@ -21,7 +22,7 @@
     border:0px;
     margin:20px 0px 20px 0px;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
-    background-color: #008ae6;
+    background-color: #0000b3;
     padding: 5px 20px 5px 20px;
     font-family: Candara, sans-serif;
     color: white;
@@ -30,30 +31,33 @@
     .button:hover{
     transform: translateY(-1px);
     box-shadow: 0 12px 18px 0 rgba(0,0,0,0.24), 0 17px 55px 0 rgba(0,0,0,0.19);
-    background-color: #007acc;
+    background-color: #000080;
     color:white;
     }
     .button:active{
     transform: translateY(0.5px);
     box-shadow: 0 11px 17px 0 rgba(0,0,0,0.24), 0 16px 54px 0 rgba(0,0,0,0.19);
-    background-color: #006bb3;
+    background-color: #000066;
     color:white;
     }
     .dropdown{
+    color:white;
+    font-family: candara, sans-serif;
+    font-size:150%;
     vertical-align:top;
     margin:10px;
     display:inline;
     padding: 5px 10px;
-    background-color: #66b3ff;
+    background-color: #0000b3;
     border-style:none;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
     }
     .motherBoard{
     position:relative;
     margin:0px 0px 10px 40px;
-    width:92%;
+    width:60%;
     height:70%;
-    background-color:#99ccff;
+    background-color: #ccccff;
     padding:10px;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
     }
@@ -61,15 +65,17 @@
 
 
 
+
+
     </style>
 </head>
 <body ng-app="TF" ng-controller="myCtrl" style="margin: 0px; padding: 0px; height: 100%;background-color: #f3f3f3;">
-<div style="background-color:#008ae6;padding:10px;color:white;font-family: Papyrus, fantasy;font-weight: bold; box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 12px 37px 0 rgba(0,0,0,0.19);">
+<div style="background-color:#000099;padding:10px;color:white;font-family: Papyrus, fantasy;font-weight: bold; box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 12px 37px 0 rgba(0,0,0,0.19);">
     <h1 style="margin:5px 0px 5px 30px;display:inline;">Task Funnel</h1>
     <!--Top band for heading-->
 </div>
 <div style="margin-left:40px;margin-top:10px;">
-    <button class="button">Parent task</button>
+    <button class="button" >Parent task</button>
 </div>
 <div class="motherBoard">
 
@@ -77,18 +83,25 @@
 
     <input ng-model="taskTitle" class="inputs" style="font-size:200%;display:inline;"> </input>
     <!--the floating box for assigning story points-->
-    <div style="margin:10px;float:right;display:inline;width:50px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #66b3ff;">
+    <div style="margin:10px;float:right;display:inline;width:50px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
         <button class="button"
-                style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;">+
+                style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;"
+                ng-click="incrementStoryPoints()">+
         </button>
-        <div style="padding:10px 0px 10px 0px;margin-top:0px;margin-bottom:0px;width:100%;text-align:center;"
-             ng-model="storyPoints">{{storyPoints}}
+        <div style="padding:10px 0px 10px 0px;margin-top:0px;margin-bottom:0px;width:100%;text-align:center;">
+            {{storyPoints}}
         </div>
         <button class="button"
-                style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;">-
+                style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;"
+                ng-click="decrementStoryPoints()">-
         </button>
     </div>
     <div>status</div>
+    <div>
+        <button class="button" style="margin-left:0px;margin-right:0px;">To Do</button>
+        <button class="button" style="margin-left:0px;margin-right:0px;">In Progress</button>
+        <button class="button" style="margin-left:0px;margin-right:0px;">Done</button>
+    </div>
     <div>progress bar/story points
 
     </div>
