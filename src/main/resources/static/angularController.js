@@ -1,8 +1,8 @@
 
 angular.module("TF", []).controller('myCtrl', function($scope) {
     $scope.taskTitle = "Task Title";
-    $scope.taskTypes = ["Objective","Epic","Story","sub-task"];
-    $scope.taskType = $scope.taskTypes[0];
+    $scope.taskTypes = ["Objective","Epic","Story","Sub-task","Float","Sub-float"];
+    $scope.taskType = $scope.taskTypes[2];
 
 
 
