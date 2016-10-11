@@ -15,7 +15,6 @@
     padding: 5px ;
     border-width: 0.5px;
     text-align: center;
-    resize: both;
     overflow: auto;
     }
     .button{
@@ -60,6 +59,8 @@
     }
 
 
+
+
     </style>
 </head>
 <body ng-app="TF" ng-controller="myCtrl" style="margin: 0px; padding: 0px; height: 100%;background-color: #f3f3f3;">
@@ -75,9 +76,22 @@
     <select class="dropdown" type="text" ng-model="taskType" ng-options="x for x in taskTypes"></select>
 
     <input ng-model="taskTitle" class="inputs" style="font-size:200%;display:inline;"> </input>
-
+    <!--the floating box for assigning story points-->
+    <div style="margin:10px;float:right;display:inline;width:50px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #66b3ff;">
+        <button class="button"
+                style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;">+
+        </button>
+        <div style="padding:10px 0px 10px 0px;margin-top:0px;margin-bottom:0px;width:100%;text-align:center;"
+             ng-model="storyPoints">{{storyPoints}}
+        </div>
+        <button class="button"
+                style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;">-
+        </button>
+    </div>
     <div>status</div>
-    <div>progress bar/story points</div>
+    <div>progress bar/story points
+
+    </div>
     <div>description</div>
 
     <div style=" position: absolute; bottom: 0;width:100%">
