@@ -40,7 +40,31 @@
     background-color: #000066;
     color:white;
     }
+    .barButton{
+    border:0px;
+    margin-left:0px;
+    margin-right:0px;
+    margin-top:10px;
+    margin-bottom:10px;
+    float:left;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
+    background-color: #0000b3;
+    padding: 5px 20px 5px 20px;
+    font-family: Candara, sans-serif;
+    color: white;
+    font-size:130%;
+    }
+    .barButton:hover{
+    background-color: #000080;
+    color:white;
+    }
+    .barButton:active{
+    transform: translateY(0.5px);
+    background-color: #000066;
+    color:white;
+    }
     .dropdown{
+    width:18%;
     color:white;
     font-family: candara, sans-serif;
     font-size:150%;
@@ -67,6 +91,7 @@
 
 
 
+
     </style>
 </head>
 <body ng-app="TF" ng-controller="myCtrl" style="margin: 0px; padding: 0px; height: 100%;background-color: #f3f3f3;">
@@ -75,13 +100,13 @@
     <!--Top band for heading-->
 </div>
 <div style="margin-left:40px;margin-top:10px;">
-    <button class="button" >Parent task</button>
+    <button class="button">Parent task</button>
 </div>
 <div class="motherBoard">
 
     <select class="dropdown" type="text" ng-model="taskType" ng-options="x for x in taskTypes"></select>
 
-    <input ng-model="taskTitle" class="inputs" style="font-size:200%;display:inline;"> </input>
+    <input ng-model="taskTitle" class="inputs" style="font-size:200%;display:inline;width:60%"> </input>
     <!--the floating box for assigning story points-->
     <div style="margin:10px;float:right;display:inline;width:50px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
         <button class="button"
@@ -96,16 +121,18 @@
                 ng-click="decrementStoryPoints()">-
         </button>
     </div>
-    <div>status</div>
-    <div>
-        <button class="button" style="margin-left:0px;margin-right:0px;">To Do</button>
-        <button class="button" style="margin-left:0px;margin-right:0px;">In Progress</button>
-        <button class="button" style="margin-left:0px;margin-right:0px;">Done</button>
-    </div>
-    <div>progress bar/story points
 
+    <div style="margin-left:10px;">
+        <button class="barButton">To Do</button>
+        <button class="barButton">In Progress</button>
+        <button class="barButton">Done</button>
+        <button class="button" style="background-color:red;margin-left:10px;margin-top:10px;">Active</button>
+        <button class="button" style="background-color: #9a9a9a;margin-left:10px;margin-top:10px;">Inactive</button>
     </div>
-    <div>description</div>
+    <div>progress bar/story points</div>
+    <div class="inputs" style="width:95%;float:left;">Quarter 2, Sprint 4 Last modified: day date</div>
+    <textarea class="inputs" type="text" style="margin:10px;color:black;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;width:95%;float:left;text-align:left;height:25%;">description</textarea>
+
 
     <div style=" position: absolute; bottom: 0;width:100%">
         <button class="button">Child</button>
