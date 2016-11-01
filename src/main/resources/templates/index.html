@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html style="height:100%;font-family: Candara, sans-serif;" lang="en">
-<head>
+<html xmlns:th="http://www.thymeleaf.org" style="height:100%;font-family: Candara, sans-serif;" lang="en">
+<head><!--
     <meta charset="UTF-8">
+-->
+    <meta http-equiv="Content-Type" content="charset=UTF-8"/>
     <title>Task Funnel</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="../static/angularController.js"></script>
+    <!--<script src="../static/angularController.js"></script>-->
+    <script type="text/javascript" th:src="@{/angularController.js}"/>
     <style>
     .inputs{
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
