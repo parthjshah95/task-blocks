@@ -88,18 +88,21 @@
     padding:10px;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
     }
-
-
-
-
-
-
-
+    .body{
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    background-color: #f3f3f3;
+    }
     </style>
 </head>
-<body ng-app="TF" ng-controller="myCtrl" style="margin: 0px; padding: 0px; height: 100%;background-color: #f3f3f3;">
-<div style="background-color:#000099;padding:10px;color:white;font-family: Papyrus, fantasy;font-weight: bold; box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 12px 37px 0 rgba(0,0,0,0.19);">
-    <h1 style="margin:5px 0px 5px 30px;display:inline;">Task Funnel</h1>
+<body ng-app="TF" ng-controller="myCtrl"
+      th:style="'background: url(' + @̣{/images/prisma.jpg} + ') repeat-y right; width: 6px;'" >
+
+<div style="background-color:#000099;padding:0px;color:white;font-family: Papyrus, fantasy;font-weight: bold; box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 12px 37px 0 rgba(0,0,0,0.19);">
+    <img th:src="@{/images/funnel.png}"
+         style="display:inline;margin:0px;height:100%;vertical-align:middle;width:50px;padding:0px;"/>
+    <h1 style="margin:5px 0px 5px 10px;display:inline;padding:10px 0px 10px 0px;vertical-align:middle;">Task Funnel</h1>
     <!--Top band for heading-->
 </div>
 <div style="margin-left:40px;margin-top:10px;">
@@ -134,7 +137,8 @@
     </div>
     <div>progress bar/story points</div>
     <div class="inputs" style="width:95%;float:left;">Quarter 2, Sprint 4 Last modified: day date</div>
-    <textarea class="inputs" type="text" style="margin:10px;color:black;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;width:95%;float:left;text-align:left;height:25%;">description</textarea>
+    <textarea class="inputs" type="text"
+              style="margin:10px;color:black;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;width:95%;float:left;text-align:left;height:25%;">description</textarea>
 
 
     <div style=" position: absolute; bottom: 0;width:100%">
