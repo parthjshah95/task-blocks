@@ -1,16 +1,18 @@
-{"tasks":		
-	[{
-		"id":"EPIC0001",
-		"title":"Placements",
-		"type":"Epic",
-		"parent":"GOAL0001",
-		"children":[{"id":"STORY0003"},{"id":"STORY0020"},{"id":"STORY0007"}],
-		"associates":[{"id":"STORY0008"},{"id":"STORY0011"}]
-		"points":"NA",
-		"description":"This epic is for all the preparations needed for the campus-placement season",
-		"status":"Parking lot",
-		"sprint(s)":[{"sprint":"S09_Q4_16"},{"sprint":"S01_Q1_17"},{"sprint":"S02_Q1_17"},{"sprint":"S03_Q1_17"},{"sprint":"S04_Q1_17"},{"sprint":"S05_Q1_17"}],
-		"estimateOfTime":"3m",
-		"deadline":"01-03-17"
+{"tasks":
+    [{ "Epics":
+	    [{
+		    "id":"EPIC0001",
+	    	"title":"Placements",
+    		"type":"Epic",
+    		"parent":"GOAL0001",
+    		"children":[{"id":"STORY0003"},{"id":"STORY0020"},{"id":"STORY0007"}],
+    		"associates":[{"id":"STORY0008"},{"id":"STORY0011"}]
+    		"points":"NA",
+    		"description":"This epic is for all the preparations needed for the campus-placement season",
+    		"status":"Parking lot",
+    		"sprint(s)":[{"sprint":"S09_Q4_16"},{"sprint":"S01_Q1_17"},{"sprint":"S02_Q1_17"},{"sprint":"S03_Q1_17"},{"sprint":"S04_Q1_17"},{"sprint":"S05_Q1_17"}],
+    		"estimateOfTime":"3m",
+    		"deadline":"01-03-17"
+    	}]
 	}]
 }

@@ -23,13 +23,13 @@
     }
     .button{
     border:0px;
-    margin:20px 0px 20px 0px;
+    margin:10px 0px 10px 0px;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
     background-color: #0000b3;
     padding: 5px 20px 5px 20px;
     font-family: Candara, sans-serif;
     color: white;
-    font-size:130%;
+    font-size:15px;
     }
     .button:hover{
     transform: translateY(-1px);
@@ -55,7 +55,7 @@
     padding: 5px 20px 5px 20px;
     font-family: Candara, sans-serif;
     color: white;
-    font-size:130%;
+    font-size:15px;
     }
     .barButton:hover{
     background-color: #000080;
@@ -70,7 +70,7 @@
     width:18%;
     color:white;
     font-family: candara, sans-serif;
-    font-size:150%;
+    font-size:15px;
     vertical-align:top;
     margin:10px;
     display:inline;
@@ -83,7 +83,7 @@
     position:relative;
     margin:0px 0px 10px 40px;
     width:60%;
-    height:70%;
+    height:400px;
     background-color: #ccccff;
     padding:10px;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
@@ -91,13 +91,12 @@
     .body{
     margin: 0px;
     padding: 0px;
-    height: 100%;
+    height: 700px;
     background-color: #f3f3f3;
     }
     </style>
 </head>
-<body ng-app="TF" ng-controller="myCtrl"
-      th:style="'background: url(' + @̣{/images/prisma.jpg} + ') repeat-y right; width: 6px;'" >
+<body class="body" ng-app="TF" ng-controller="myCtrl">
 
 <div style="background-color:#000099;padding:0px;color:white;font-family: Papyrus, fantasy;font-weight: bold; box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 12px 37px 0 rgba(0,0,0,0.19);">
     <img th:src="@{/images/funnel.png}"
@@ -107,12 +106,14 @@
 </div>
 <div style="margin-left:40px;margin-top:10px;">
     <button class="button">Parent task</button>
+    <button class="button" ng-click="createJson()">showjson</button>
 </div>
 <div class="motherBoard">
 
     <select class="dropdown" type="text" ng-model="taskType" ng-options="x for x in taskTypes"></select>
+    <!--<button ng-click="qtt()">Query task type</button>-->
 
-    <input ng-model="taskTitle" class="inputs" style="font-size:200%;display:inline;width:60%"> </input>
+    <input ng-model="taskTitle" class="inputs" style="font-size:25px;display:inline;width:60%"> </input>
     <!--the floating box for assigning story points-->
     <div style="margin:10px;float:right;display:inline;width:50px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
         <button class="button"
@@ -129,15 +130,14 @@
     </div>
 
     <div style="margin-left:10px;">
+        <button class="barButton">Parked</button>
         <button class="barButton">To Do</button>
         <button class="barButton">In Progress</button>
         <button class="barButton">Done</button>
-        <button class="button" style="background-color:red;margin-left:10px;margin-top:10px;">Active</button>
-        <button class="button" style="background-color: #9a9a9a;margin-left:10px;margin-top:10px;">Inactive</button>
     </div>
     <div>progress bar/story points</div>
     <div class="inputs" style="width:95%;float:left;">Quarter 2, Sprint 4 Last modified: day date</div>
-    <textarea class="inputs" type="text"
+    <textarea class="inputs" type="text" ng-model="description"
               style="margin:10px;color:black;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;width:95%;float:left;text-align:left;height:25%;">description</textarea>
 
 
