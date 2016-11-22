@@ -2,27 +2,47 @@
 angular.module("TF", []).controller('myCtrl', function($scope, $http) {
     $scope.taskTitle = "Task Title";
     $scope.taskTypes = ["Objective","Epic","Story","Sub-task","Float","Sub-float"];
+    var stList = ["Parked","To Do","In Progress","Done"];
+    var s = 1;
+    $scope.status = stList[s];
+
+    $scope.statusNext = function(){
+        if(s <= 2){
+            s += 1;
+        }
+        $scope.status = stList[s];
+    }
+    $scope.statusPrevious = function(){
+        if(s >= 1){
+            s -= 1;
+        }
+        $scope.status = stList[s];
+    }
     $scope.taskType = $scope.taskTypes[2];
     var i = 2;
-    $scope.fibionacciSeries = [1,2,3,5,8,13];
-    $scope.storyPoints = $scope.fibionacciSeries[i];
+    var fibionacciSeries = [1,2,3,5,8,13];
+    $scope.storyPoints = fibionacciSeries[i];
     $scope.description = "description";
 
     $scope.incrementStoryPoints = function(){
         if(i <= 4){
             i = i + 1;
         }
-        $scope.storyPoints = $scope.fibionacciSeries[i];
+        $scope.storyPoints = fibionacciSeries[i];
     }
 
     $scope.decrementStoryPoints = function(){
         if(i >= 1){
             i= i - 1;
         }
-        $scope.storyPoints = $scope.fibionacciSeries[i];
+        $scope.storyPoints = fibionacciSeries[i];
     }
 
     var sprintList = [];
+    $scope.showJson = function(){
+        alert(JSON.stringify($scope.createJson()));
+    }
+
     $scope.createJson = function(){
         var task = {};
         task.id = createId($scope.taskType);
@@ -37,19 +57,28 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
         task.sprints = sprintList;//TODO change placeholder
         task.estimateOfTime = "something";//TODO change placeholder
         task.deadline = "something";//TODO change placeholder
-        alert(JSON.stringify(task));
+        return task;
     }
     function createId(type){
         return "2";
     }
     //$scope.qtt = function(){alert($scope.taskType)}
-    /*$scope.save = function(task){
-        $http(
-            url = '/save',
-            method = 'POST',
-            data = task
-        )
-    }*/
+    $scope.save = function(){
+        var json = $scope.createJson();
+        $http({
+            url: '/save',
+            method: 'POST',
+            data: json
+        }).then(function successCallback(response) {
+               // this callback will be called asynchronously
+               // when the response is available
+               alert(JSON.stringify(response.data));
+             }, function errorCallback(response) {
+               // called asynchronously if an error occurs
+               // or server returns response with an error status.
+               alert(JSON.stringify(response.data));
+             });
+    }
 
 
 

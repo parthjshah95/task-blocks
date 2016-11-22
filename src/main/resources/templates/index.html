@@ -43,29 +43,7 @@
     background-color: #000066;
     color:white;
     }
-    .barButton{
-    border:0px;
-    margin-left:0px;
-    margin-right:0px;
-    margin-top:10px;
-    margin-bottom:10px;
-    float:left;
-    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
-    background-color: #0000b3;
-    padding: 5px 20px 5px 20px;
-    font-family: Candara, sans-serif;
-    color: white;
-    font-size:15px;
-    }
-    .barButton:hover{
-    background-color: #000080;
-    color:white;
-    }
-    .barButton:active{
-    transform: translateY(0.5px);
-    background-color: #000066;
-    color:white;
-    }
+
     .dropdown{
     width:18%;
     color:white;
@@ -79,6 +57,12 @@
     border-style:none;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
     }
+    .dropdown:hover{
+    background-color: #000080;
+    }
+    .dropdown:active{
+    background-color: #000066;
+    }
     .motherBoard{
     position:relative;
     margin:0px 0px 10px 40px;
@@ -89,6 +73,7 @@
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
     }
     .body{
+    background-image:url("/images/prisma.jpg");
     margin: 0px;
     padding: 0px;
     height: 700px;
@@ -106,7 +91,8 @@
 </div>
 <div style="margin-left:40px;margin-top:10px;">
     <button class="button">Parent task</button>
-    <button class="button" ng-click="createJson()">showjson</button>
+    <button class="button" ng-click="showJson()">show json</button>
+    <button class="button" ng-click="save()">save task</button>
 </div>
 <div class="motherBoard">
 
@@ -129,13 +115,12 @@
         </button>
     </div>
 
-    <div style="margin-left:10px;">
-        <button class="barButton">Parked</button>
-        <button class="barButton">To Do</button>
-        <button class="barButton">In Progress</button>
-        <button class="barButton">Done</button>
+    <div style="margin:10px;padding:5px 0px;display:inline;height: 30px;width:150px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
+        <button class="button" ng-click="statusPrevious()" style="padding:0px 10px 4px 10px;font-size:20px;">&lt;</button>
+        <span style="height: 100% width:50px;padding:5px;">{{status}}</span>
+        <button class="button" ng-click="statusNext()" style="padding:0px 10px 4px 10px;font-size:20px;">&gt;</button>
     </div>
-    <div>progress bar/story points</div>
+
     <div class="inputs" style="width:95%;float:left;">Quarter 2, Sprint 4 Last modified: day date</div>
     <textarea class="inputs" type="text" ng-model="description"
               style="margin:10px;color:black;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;width:95%;float:left;text-align:left;height:25%;">description</textarea>
