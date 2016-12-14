@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -30,6 +31,22 @@ public class IndexController {
     public String indexController() {
 
     return "/index";
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<String> saveTask(@RequestBody String task) {
+        String message = "";
+        try{
+            File Dir = new File("task repository");
+            message = String.valueOf(Dir.mkdir());
+            File tasks = new File("task repository/tr.txt");
+            message = String.valueOf(tasks.createNewFile() + "for file");
+
+            //message = "Saved!";
+        }catch (Exception e){
+            message = "Error: " + e;
+        }
+        return new ResponseEntity<String>(message, HttpStatus.ACCEPTED);
     }
 
 }
