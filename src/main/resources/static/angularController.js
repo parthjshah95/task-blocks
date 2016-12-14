@@ -60,7 +60,7 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
         return task;
     }
     function createId(type){
-        return "2";
+        return "GOAL0004";
     }
     //$scope.qtt = function(){alert($scope.taskType)}
     $scope.save = function(){
