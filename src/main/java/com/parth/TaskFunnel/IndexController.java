@@ -12,10 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,10 +21,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.json.simple.JSONObject;
+
 /*** Created by parshah on 17-Sep-16.*/
 
 @Controller
 public class IndexController {
+
+    File dir = new File("save-dir");
+    File subdir = new File("save-dir/tasks");
+
+    static String taskTree = "";
+
+    private String getAllTasks() {
+        String msg = "";
+        if (!dir.exists()) {
+            dir.mkdir();//TODO make an exception?
+        }
+        if (!subdir.exists()) {
+            subdir.mkdir();//TODO make an exception?
+        }
+        File[] taskList = subdir.listFiles();
+        for (int i = 0; i < taskList.length; i++) {
+            System.out.println(taskList[i]);
+            try {
+                FileReader reader = new FileReader(taskList[i]);
+            } catch (java.io.FileNotFoundException f) {
+                //TODO
+            }
+        }
+        return "change this later";// TODO complete the function
+    }
+
+    @RequestMapping(value = "/temp", method = RequestMethod.GET, produces = "plain/text")
+    public ResponseEntity<String> temp() {
+        String msg = "";
+        getAllTasks();
+        return new ResponseEntity<String>(msg, HttpStatus.ACCEPTED);
+    }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String indexController() {
@@ -44,8 +75,8 @@ public class IndexController {
         System.out.print(endIndex + "\t");
         System.out.println(taskId);*/
         String msg = "";
-        File dir = new File("save-dir");
         if (!dir.exists()) dir.mkdir();
+        if (!subdir.exists()) subdir.mkdir();
         File jsonFile = new File("save-dir/tasks/" + taskId + ".json");
         if (!jsonFile.exists()) {
             try {
