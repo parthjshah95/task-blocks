@@ -45,9 +45,10 @@ public class IndexController {
         for (int i = 0; i < taskList.length; i++) {
             System.out.println(taskList[i]);
             try {
-                FileReader reader = new FileReader(taskList[i]);
-            } catch (java.io.FileNotFoundException f) {
-                //TODO
+                String task = Files.readAllLines(Paths.get("save-dir/tasks/"+ taskList[i].getName())).toString();
+                System.out.print(task);
+            } catch (java.io.IOException f) {
+                System.out.println(f);//TODO
             }
         }
         return "change this later";// TODO complete the function
