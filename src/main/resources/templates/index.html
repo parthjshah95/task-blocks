@@ -74,11 +74,14 @@
     }
     .body{
     background-image:url("/images/prisma.jpg");
+    background-size:cover;
+    background-repeat:no-repeat;
     margin: 0px;
     padding: 0px;
     height: 700px;
     background-color: #f3f3f3;
     }
+
     </style>
 </head>
 <body class="body" ng-app="TF" ng-controller="myCtrl">
@@ -117,7 +120,8 @@
     </div>
 
     <div style="margin:10px;padding:5px 0px;display:inline;height: 30px;width:150px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
-        <button class="button" ng-click="statusPrevious()" style="padding:0px 10px 4px 10px;font-size:20px;">&lt;</button>
+        <button class="button" ng-click="statusPrevious()" style="padding:0px 10px 4px 10px;font-size:20px;">
+            &lt;</button>
         <span style="height: 100% width:50px;padding:5px;">{{status}}</span>
         <button class="button" ng-click="statusNext()" style="padding:0px 10px 4px 10px;font-size:20px;">&gt;</button>
     </div>

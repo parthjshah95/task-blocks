@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.json.simple.JSONObject;
 
 /*** Created by parshah on 17-Sep-16.*/
 
@@ -34,7 +33,7 @@ public class IndexController {
     static String taskTree = "";
 
     private String getAllTasks() {
-        String msg = "";
+        List<String> allTasks = new ArrayList<>(20);
         if (!dir.exists()) {
             dir.mkdir();//TODO make an exception?
         }
@@ -44,20 +43,22 @@ public class IndexController {
         File[] taskList = subdir.listFiles();
         for (int i = 0; i < taskList.length; i++) {
             System.out.println(taskList[i]);
+            String task = "{\"empty\":\"empty\"}";
             try {
-                String task = Files.readAllLines(Paths.get("save-dir/tasks/"+ taskList[i].getName())).toString();
-                System.out.print(task);
+                task = Files.readAllLines(Paths.get("save-dir/tasks/" + taskList[i].getName())).get(0).toString();
+                System.out.println(task);
             } catch (java.io.IOException f) {
                 System.out.println(f);//TODO
             }
+            allTasks.add(task);
         }
-        return "change this later";// TODO complete the function
+        System.out.println(allTasks);
+        return allTasks.toString();
     }
 
-    @RequestMapping(value = "/temp", method = RequestMethod.GET, produces = "plain/text")
+    @RequestMapping(value = "/allTasks", method = RequestMethod.GET, produces = "plain/text")
     public ResponseEntity<String> temp() {
-        String msg = "";
-        getAllTasks();
+        String msg = getAllTasks();
         return new ResponseEntity<String>(msg, HttpStatus.ACCEPTED);
     }
 
