@@ -95,7 +95,6 @@
 <div style="margin-left:40px;margin-top:10px;">
     <button class="button">Parent task</button>
     <button class="button" ng-click="showJson()">show json</button>
-    <button class="button" ng-click="save()">save task</button>
     <button class="button" ng-click="temp()">temp</button>
 </div>
 <div class="motherBoard">
@@ -119,23 +118,31 @@
         </button>
     </div>
 
+    <button class="button" style="margin:10px" ng-click="save()">save task</button>
+
     <div style="margin:10px;padding:5px 0px;display:inline;height: 30px;width:150px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
-        <button class="button" ng-click="statusPrevious()" style="padding:0px 10px 4px 10px;font-size:20px;">
+        <button class="button" ng-click="statusPrevious()" style="padding:0px 10px 4px 10px;font-size:20px;transform: translateY(-1px);">
             &lt;</button>
         <span style="height: 100% width:50px;padding:5px;">{{status}}</span>
-        <button class="button" ng-click="statusNext()" style="padding:0px 10px 4px 10px;font-size:20px;">&gt;</button>
+        <button class="button" ng-click="statusNext()" style="padding:0px 10px 4px 10px;font-size:20px;transform: translateY(-1px);">&gt;</button>
     </div>
 
+
+
     <div class="inputs" style="width:95%;float:left;">Quarter 2, Sprint 4 Last modified: day date</div>
+
     <textarea class="inputs" type="text" ng-model="description"
-              style="margin:10px;color:black;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;width:95%;float:left;text-align:left;height:25%;">description</textarea>
+              style="margin:10px;color:black;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;width:60%;float:left;text-align:left;height:40%;">description</textarea>
 
 
-    <div style=" position: absolute; bottom: 0;width:100%">
-        <button class="button">Child</button>
-        <button class="button">Child</button>
-        <button class="button">Child</button>
-        <button class="button" style="font-size:160%;padding:0px 20px 5px 20px;">+</button>
+    <div style="float:right;height:35%; width:30%; margin:10px;">
+        <div style="border:0px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #0000b3;padding: 5px 20px 5px 20px;font-family: Candara, sans-serif;color: white;font-size:15px;">
+            Children
+        </div>
+        <div class="inputs" style="overflow-y:auto;overflow-x:visible;height:100%;width:100%;margin:0px;padding:0px;">
+            <button class="button" style="width:100%"></button>
+        </div>
+        <button class="button" style="margin:0px;width:100%; font-size:160%;padding:0px 20px 5px 20px;">+</button>
 
     </div>
 </div>

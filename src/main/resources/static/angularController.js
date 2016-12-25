@@ -2,9 +2,64 @@
 angular.module("TF", []).controller('myCtrl', function($scope, $http) {
     $scope.taskTitle = "Task Title";
     $scope.taskTypes = ["Objective","Epic","Story","Sub-task","Float","Sub-float"];
-    var stList = ["Parked","To Do","In Progress","Done"];
-    var s = 1; // pointer to dropdown options
+    var taskTypeCodes = ["OBJV"/*0*/,"EPIC"/*1*/,"STRY"/*2*/,"SUBT"/*3*/,"FLOT"/*4*/,"SBFT"/*5*/];
+    var stList = ["Parked","To Do","In Progress","Done"];//list of possible statuses
+    var s = 0; // pointer to dropdown options of stList
     $scope.status = stList[s];
+    var allTasks = [];
+    var objectives = [];
+    var epics = [];
+    var stories = [];
+    var subtasks = [];
+    var floats = [];
+    var subfloats = [];
+
+    function classifyTask(task,index){
+        var type = task.id.substr(0,4);//substr(fromIndex, number of characters)
+        switch(type){
+            case taskTypeCodes[0]:
+                var i = objectives.length;
+                objectives [i] = task;
+                break;
+            case taskTypeCodes[1]:
+                var i = epics.length;
+                epics [i] = task;
+                break;
+            case taskTypeCodes[2]:
+                var i = stories.length;
+                stories [i] = task;
+                break;
+            case taskTypeCodes[3]:
+                var i = subtasks.length;
+                subtasks [i] = task;
+                break;
+            case taskTypeCodes[4]:
+                var i = floats.length;
+                floats [i] = task;
+                break;
+            case taskTypeCodes[5]:
+                var i = subfloats.length;
+                subfloats [i] = task;
+                break;
+        }
+    }
+    function classifyTasks(){
+        allTasks.forEach(classifyTask);
+    }
+
+    $scope.getAllTasks = function(){
+        $http({
+            url:'/allTasks',
+            method:'GET'
+        }).then(function successCallback(response){
+                allTasks = response.data;
+                classifyTasks();
+                alert(JSON.stringify(allTasks));
+                alert(JSON.stringify(objectives));
+            },function errorCallback(response){
+                alert(JSON.stringify(response));
+            })
+    }
 
     $scope.statusNext = function(){
         if(s <= 2){
@@ -60,7 +115,40 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
         return task;
     }
     function createId(type){
-        return "GOAL0002";//TODO take from saved tasks
+        var id = "";
+        switch(type){
+            case taskTypes[0]:
+                var p = taskTypeCodes[0];
+                var q = objectives.length + 1;
+                id = p + q.toString();
+                break;
+            case taskTypes[1]:
+                var p = taskTypeCodes[1];
+                var q = epics.length + 1;
+                id = p + q.toString();
+                break;
+            case taskTypes[2]:
+                var p = taskTypeCodes[2];
+                var q = stories.length + 1;
+                id = p + q.toString();
+                break;
+            case taskTypes[3]:
+                var p = taskTypeCodes[3];
+                var q = subtasks.length + 1;
+                id = p + q.toString();
+                break;
+            case taskTypes[4]:
+                var p = taskTypeCodes[4];
+                var q = floats.length + 1;
+                id = p + q.toString();
+                break;
+            case taskTypes[5]:
+                var p = taskTypeCodes[5];
+                var q = subfloats.length + 1;
+                id = p + q.toString();
+                break;
+        }
+        return id;
     }
     //$scope.qtt = function(){alert($scope.taskType)}
     $scope.save = function(){
@@ -81,18 +169,9 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
     }
 
     $scope.temp = function(){
-            $http({
-                url: '/temp',
-                method: 'GET'
-            }).then(function successCallback(response) {
-                   // this callback will be called asynchronously
-                   // when the response is available
-                   alert(JSON.stringify(response.data));
-                 }, function errorCallback(response) {
-                   // called asynchronously if an error occurs
-                   // or server returns response with an error status.
-                   alert(JSON.stringify(response.data));
-                 });
-        }
+        $scope.getAllTasks();
 
-});//for taskFunnel.controller
+    }
+
+
+});
