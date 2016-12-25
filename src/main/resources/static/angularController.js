@@ -108,7 +108,7 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
         task.associates = "something";//TODO change placeholder
         task.points = $scope.storyPoints;
         task.description = $scope.description;
-        task.status = "something";//TODO change placeholder
+        task.status = $scope.status;
         task.sprints = sprintList;//TODO change placeholder
         task.estimateOfTime = "something";//TODO change placeholder
         task.deadline = "something";//TODO change placeholder

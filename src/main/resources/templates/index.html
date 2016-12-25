@@ -10,6 +10,16 @@
     <!--<script src="../static/angularController.js"></script>-->
     <script type="text/javascript" th:src="@{/angularController.js}"/>
     <style>
+    .header{
+    height:10%;
+    background-color:#000099;
+    padding:0px;
+    color:white;
+    font-size:22px;
+    font-family: candara, sans-serif;
+    font-weight: bold;
+    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 12px 37px 0 rgba(0,0,0,0.19);
+    }
     .inputs{
     font-family: candara, sans-serif;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
@@ -65,9 +75,9 @@
     }
     .motherBoard{
     position:relative;
-    margin:0px 0px 10px 40px;
+    margin:0px 10px 10px 40px;
     width:60%;
-    height:400px;
+    height:70%;
     background-color: #ccccff;
     padding:10px;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
@@ -78,22 +88,35 @@
     background-repeat:no-repeat;
     margin: 0px;
     padding: 0px;
-    height: 700px;
+    height: 100%;
     background-color: #f3f3f3;
     }
-
+    .navigator{
+    background-color: #ccccff;
+    height:80%;
+    width:30%;
+    margin:20px 20px 20px 0px;
+    float:right;
+    overflow-y:auto;
+    box-shadow: 0 2px 3px 2px rgba(0,0,0,0.24), 0 3px 9px 2px rgba(0,0,0,0.19);
+    }
     </style>
 </head>
 <body class="body" ng-app="TF" ng-controller="myCtrl">
 
-<div style="background-color:#000099;padding:0px;color:white;font-family: Papyrus, fantasy;font-weight: bold; box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 12px 37px 0 rgba(0,0,0,0.19);">
+<div class="header">
     <img th:src="@{/images/funnel.png}"
          style="display:inline;margin:0px;height:100%;vertical-align:middle;width:50px;padding:0px;"/>
     <h1 style="margin:5px 0px 5px 10px;display:inline;padding:10px 0px 10px 0px;vertical-align:middle;">Task Funnel</h1>
     <!--Top band for heading-->
 </div>
+<div class="navigator">
+    <div style="padding:5px 20px 10px 20px;font-size:120%;text-align:center;margin:0px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #0000b3;font-family: Candara, sans-serif;color: white;">
+        Navigation
+    </div>
+</div>
 <div style="margin-left:40px;margin-top:10px;">
-    <button class="button">Parent task</button>
+    <button class="button">&lt; Parent task</button>
     <button class="button" ng-click="showJson()">show json</button>
     <button class="button" ng-click="temp()">temp</button>
 </div>
@@ -132,17 +155,19 @@
     <div class="inputs" style="width:95%;float:left;">Quarter 2, Sprint 4 Last modified: day date</div>
 
     <textarea class="inputs" type="text" ng-model="description"
-              style="margin:10px;color:black;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;width:60%;float:left;text-align:left;height:40%;">description</textarea>
+              style="margin:10px;color:black;width:50%;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;float:left;text-align:left;height:40%;">Description</textarea>
 
 
-    <div style="float:right;height:35%; width:30%; margin:10px;">
-        <div style="border:0px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #0000b3;padding: 5px 20px 5px 20px;font-family: Candara, sans-serif;color: white;font-size:15px;">
+    <div style="float:right;height:35%; width:40%; margin:10px;pading:0px">
+        <div style="border-style:solid;border-color:black;border-width:0px 0px 0.5px 0px;text-align:center;margin:0px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #0000b3;padding: 5px 20px 5px 20px;font-family: Candara, sans-serif;color: white;font-size:15px;">
             Children
         </div>
-        <div class="inputs" style="overflow-y:auto;overflow-x:visible;height:100%;width:100%;margin:0px;padding:0px;">
-            <button class="button" style="width:100%"></button>
+        <div class="inputs" style="overflow-y:auto;overflow-x:visible;height:70%;width:100%;margin:0px;padding:0px;">
+            <button class="button" style="text-align:left;width:100%;margin:0px;border-style:solid;border-color:black;border-width:1px 0px 0px 0px;">child</button>
+            <button class="button" style="text-align:left;width:100%;margin:0px;border-style:solid;border-color:black;border-width:1px 0px 0px 0px;">child</button>
+            <button class="button" style="text-align:left;width:100%;margin:0px;border-style:solid;border-color:black;border-width:1px 0px 0px 0px;">child</button>
         </div>
-        <button class="button" style="margin:0px;width:100%; font-size:160%;padding:0px 20px 5px 20px;">+</button>
+        <button class="button" style="border-style:solid;border-color:black;border-width:0.5px 0px 0px 0px;margin:0px;width:100%; font-size:120%;padding:0px 20px 5px 20px;">+</button>
 
     </div>
 </div>
