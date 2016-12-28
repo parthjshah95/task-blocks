@@ -1,50 +1,92 @@
-
 angular.module("TF", []).controller('myCtrl', function($scope, $http) {
+
     $scope.taskTitle = "Task Title";
     $scope.taskTypes = ["Objective","Epic","Story","Sub-task","Float","Sub-float"];
+    var level = 2;
+    $scope.taskType = $scope.taskTypes[level];
     var taskTypeCodes = ["OBJV"/*0*/,"EPIC"/*1*/,"STRY"/*2*/,"SUBT"/*3*/,"FLOT"/*4*/,"SBFT"/*5*/];
     var stList = ["Parked","To Do","In Progress","Done"];//list of possible statuses
     var s = 0; // pointer to dropdown options of stList
     $scope.status = stList[s];
-    var allTasks = [];
-    var objectives = [];
-    var epics = [];
-    var stories = [];
-    var subtasks = [];
-    var floats = [];
-    var subfloats = [];
+    var i = 2;
+    var fibonacciSeries = [1,2,3,5,8,13];
+    $scope.storyPoints = fibonacciSeries[i];
+    $scope.description = "";
+
+
+    $scope.allTasks = [];
+    $scope.objectives = [];
+    $scope.epics = [];
+    $scope.stories = [];
+    $scope.subtasks = [];
+    $scope.floats = [];
+    $scope.subfloats = [];
+
+    $scope.getAllTasks();
+
+    var currentTask = {};
+    function initializeCurrentTask(){
+        currentTask.id = createId($scope.taskType);
+        currentTask.title = $scope.taskTitle;//this needs updates
+        currentTask.type = $scope.taskType;//this needs updates
+        currentTask.parent = "something";
+        currentTask.children = "something";
+        currentTask.associates = "something";//TODO change placeholder
+        currentTask.points = $scope.storyPoints;//this needs updates
+        currentTask.description = $scope.description;//this needs updates
+        currentTask.status = $scope.status;//this needs updates
+        currentTask.sprints = sprintList;//TODO change placeholder
+        currentTask.estimateOfTime = "something";//TODO change placeholder
+        currentTask.deadline = "something";//TODO change placeholder
+    }
+
+
+    function updateCurrentTask(){
+        currentTask.title = $scope.taskTitle;
+        currentTask.type = $scope.taskType;
+        currentTask.points = $scope.storyPoints;
+        currentTask.description = $scope.description;
+        currentTask.status = $scope.status;
+    }
+
+    /*$scope.newChild = function(){
+        level += 1;
+        $scope.taskType = $scope.taskTypes[level];
+        id = createId($scope.taskType);
+
+    }*/
 
     function classifyTask(task,index){
         var type = task.id.substr(0,4);//substr(fromIndex, number of characters)
         switch(type){
             case taskTypeCodes[0]:
-                var i = objectives.length;
-                objectives [i] = task;
+                var i = $scope.objectives.length;
+                $scope.objectives [i] = task;
                 break;
             case taskTypeCodes[1]:
-                var i = epics.length;
-                epics [i] = task;
+                var i = $scope.epics.length;
+                $scope.epics [i] = task;
                 break;
             case taskTypeCodes[2]:
-                var i = stories.length;
-                stories [i] = task;
+                var i = $scope.stories.length;
+                $scope.stories [i] = task;
                 break;
             case taskTypeCodes[3]:
-                var i = subtasks.length;
-                subtasks [i] = task;
+                var i = $scope.subtasks.length;
+                $scope.subtasks [i] = task;
                 break;
             case taskTypeCodes[4]:
-                var i = floats.length;
-                floats [i] = task;
+                var i = $scope.floats.length;
+                $scope.floats [i] = task;
                 break;
             case taskTypeCodes[5]:
-                var i = subfloats.length;
-                subfloats [i] = task;
+                var i = $scope.subfloats.length;
+                $scope.subfloats [i] = task;
                 break;
         }
     }
     function classifyTasks(){
-        allTasks.forEach(classifyTask);
+        $scope.allTasks.forEach(classifyTask);
     }
 
     $scope.getAllTasks = function(){
@@ -52,10 +94,8 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
             url:'/allTasks',
             method:'GET'
         }).then(function successCallback(response){
-                allTasks = response.data;
+                $scope.allTasks = response.data;
                 classifyTasks();
-                alert(JSON.stringify(allTasks));
-                alert(JSON.stringify(objectives));
             },function errorCallback(response){
                 alert(JSON.stringify(response));
             })
@@ -73,24 +113,20 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
         }
         $scope.status = stList[s];
     }
-    $scope.taskType = $scope.taskTypes[2];
-    var i = 2;
-    var fibionacciSeries = [1,2,3,5,8,13];
-    $scope.storyPoints = fibionacciSeries[i];
-    $scope.description = "description";
+
 
     $scope.incrementStoryPoints = function(){
         if(i <= 4){
             i = i + 1;
         }
-        $scope.storyPoints = fibionacciSeries[i];
+        $scope.storyPoints = fibonacciSeries[i];
     }
 
     $scope.decrementStoryPoints = function(){
         if(i >= 1){
             i= i - 1;
         }
-        $scope.storyPoints = fibionacciSeries[i];
+        $scope.storyPoints = fibonacciSeries[i];
     }
 
     var sprintList = [];
@@ -98,22 +134,6 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
         alert(JSON.stringify($scope.createJson()));
     }
 
-    $scope.createJson = function(){
-        var task = {};
-        task.id = createId($scope.taskType);
-        task.title = $scope.taskTitle;
-        task.type = $scope.taskType;
-        task.parent = "something";//TODO change placeholder
-        task.children = "something";//TODO change placeholder
-        task.associates = "something";//TODO change placeholder
-        task.points = $scope.storyPoints;
-        task.description = $scope.description;
-        task.status = $scope.status;
-        task.sprints = sprintList;//TODO change placeholder
-        task.estimateOfTime = "something";//TODO change placeholder
-        task.deadline = "something";//TODO change placeholder
-        return task;
-    }
     function createId(type){
         var id = "";
         switch(type){
@@ -152,26 +172,20 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
     }
     //$scope.qtt = function(){alert($scope.taskType)}
     $scope.save = function(){
-        var json = $scope.createJson();
+        updateCurrentTask();
         $http({
             url: '/save',
             method: 'POST',
-            data: json
+            data: currentTask
         }).then(function successCallback(response) {
                // this callback will be called asynchronously
                // when the response is available
                alert(JSON.stringify(response.data));
+               $scope.getAllTasks();
              }, function errorCallback(response) {
                // called asynchronously if an error occurs
                // or server returns response with an error status.
                alert(JSON.stringify(response.data));
              });
     }
-
-    $scope.temp = function(){
-        $scope.getAllTasks();
-
-    }
-
-
 });
