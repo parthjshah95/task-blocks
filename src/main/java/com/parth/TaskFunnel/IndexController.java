@@ -46,7 +46,6 @@ public class IndexController {
             String task = "{\"empty\":\"empty\"}";
             try {
                 task = Files.readAllLines(Paths.get("save-dir/tasks/" + taskList[i].getName())).get(0).toString();
-                System.out.println(task);
             } catch (java.io.IOException f) {
                 System.out.println(f);//TODO
             }

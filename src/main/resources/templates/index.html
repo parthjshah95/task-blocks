@@ -8,8 +8,9 @@
 
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
     <!--<script src="../static/angularController.js"></script>-->
-    <script type="text/javascript" th:src="@{/angularController.js}"/>
+
     <script type="text/javascript" th:src="@{/angular.min.js}"/>
+    <script type="text/javascript" th:src="@{/angularController.js}"/>
     <style>
     .header{
     height:10%;
@@ -41,14 +42,17 @@
     font-family: Candara, sans-serif;
     color: white;
     font-size:15px;
+    border-style:none;
     }
     .button:hover{
+    border-style:none;
     transform: translateY(-1px);
     box-shadow: 0 12px 18px 0 rgba(0,0,0,0.24), 0 17px 55px 0 rgba(0,0,0,0.19);
     background-color: #000080;
     color:white;
     }
     .button:active{
+    border-style:none;
     transform: translateY(0.5px);
     box-shadow: 0 11px 17px 0 rgba(0,0,0,0.24), 0 16px 54px 0 rgba(0,0,0,0.19);
     background-color: #000066;
@@ -60,19 +64,12 @@
     color:white;
     font-family: candara, sans-serif;
     font-size:15px;
-    vertical-align:top;
     margin:10px;
     display:inline;
-    padding: 5px 10px;
+    padding:10px;
     background-color: #0000b3;
     border-style:none;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
-    }
-    .dropdown:hover{
-    background-color: #000080;
-    }
-    .dropdown:active{
-    background-color: #000066;
     }
     .motherBoard{
     position:relative;
@@ -87,9 +84,10 @@
     background-image:url("/images/prisma.jpg");
     background-size:cover;
     background-repeat:no-repeat;
+    background-color:orange;
     margin: 0px;
     padding: 0px;
-    height: 100%;
+    height: 500px;
     background-color: #f3f3f3;
     }
     .navigator{
@@ -119,7 +117,7 @@
     background-color:#000077;
     }
     .buttonHeader:active{
-    background-color:#000066;
+    background-color:#000055;
     }
     </style>
 </head>
@@ -129,28 +127,33 @@
     <img th:src="@{/images/funnel.png}"
          style="display:inline;margin:0px;height:100%;vertical-align:middle;width:50px;padding:0px;"/>
     <h1 style="margin:5px 0px 5px 10px;display:inline;padding:10px 0px 10px 0px;vertical-align:middle;">Task Funnel</h1>
-    <button class="buttonHeader">new objective</button>
-    <button class="buttonHeader">new float</button>
+    <button class="buttonHeader" ng-click="newObjective()">new objective</button>
+    <button class="buttonHeader" ng-click="newFloat()">new float</button>
     <!--Top band for heading-->
 </div>
 <div class="navigator">
     <div style="padding:5px 20px 10px 20px;font-size:120%;text-align:center;margin:0px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #0000b3;font-family: Candara, sans-serif;color: white;">
         Navigation
     </div>
-    <div ng-repeat="task in allTasks track by task.id">
-        <button class="button" style="margin:10px 0px; width:100%;">{{task.title}}</button>
-
+    <div ng-repeat="(oId,objective) in objectives track by $index">
+        <button class="button" ng-click="updateCurrentTaskById(oId)" style="margin:5px;margin-left:2.5%;margin-right:2.5%; width:95%;border-style:solid;border-width:0px 0px 0px 0px">{{objective.title}}</button>
+        <div ng-repeat="e in objective.children track by $index">
+            <button class="button" ng-click="updateCurrentTaskById(e)" style="background-color:#0000ff;margin:5px;margin-left:5%;margin-right:5%; width:90%;border-style:solid;border-width:0px 0px 0px 0px;">{{getTaskById(e).title}}</button>
+            <div ng-repeat="s in getTaskById(e).children track by $index">
+                <button class="button" ng-click="updateCurrentTaskById(s)" style="background-color:#3333ff;margin:5px;margin-left:7.5%;margin-right:7.5%; width:85%;border-style:solid;border-width:0px 0px 0px 0px;">{{getTaskById(s).title}}</button>
+                <div ng-repeat="st in getTaskById(s).children track by $index">
+                    <button class="button" ng-click="updateCurrentTaskById(st)" style="background-color:#6666ff;margin:5px;margin-left:10%;margin-right:10%; width:80%;border-style:solid;border-width:0px 0px 0px 0px;">{{getTaskById(st).title}}</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div style="margin-left:40px;margin-top:10px;">
-    <button class="button">&lt; Parent task</button>
-    <button class="button" ng-click="showJson()">show json</button>
-    <button class="button" ng-click="temp()">temp</button>
+    <button class="button" ng-click="updateCurrentTaskById(parent)">&lt; {{getTaskById(parent).title}}</button>
 </div>
 <div class="motherBoard">
 
-    <select class="dropdown" type="text" ng-model="taskType" ng-options="x for x in taskTypes"></select>
-    <!--<button ng-click="qtt()">Query task type</button>-->
+    <div class="dropdown" type="text" ng-bind="taskType" ></div>
 
     <input ng-model="taskTitle" class="inputs" style="font-size:25px;display:inline;width:60%"> </input>
     <!--the floating box for assigning story points-->
@@ -181,7 +184,7 @@
 
     <div class="inputs" style="width:95%;float:left;">Quarter 2, Sprint 4 Last modified: day date</div>
 
-    <textarea class="inputs" type="text" ng-model="description" placeholder="description"
+    <textarea class="inputs" type="text" ng-model="description"
               style="margin:10px;color:black;width:50%;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;float:left;text-align:left;height:40%;">Description</textarea>
 
 
@@ -190,11 +193,9 @@
             Children
         </div>
         <div class="inputs" style="overflow-y:auto;overflow-x:visible;height:70%;width:100%;margin:0px;padding:0px;">
-            <button class="button" style="text-align:left;width:100%;margin:0px;border-style:solid;border-color:black;border-width:1px 0px 0px 0px;">child</button>
-            <button class="button" style="text-align:left;width:100%;margin:0px;border-style:solid;border-color:black;border-width:1px 0px 0px 0px;">child</button>
-            <button class="button" style="text-align:left;width:100%;margin:0px;border-style:solid;border-color:black;border-width:1px 0px 0px 0px;">child</button>
+            <button class="button" ng-repeat="child in children" ng-click="updateCurrentTaskById(child)" style="text-align:left;width:100%;margin:0px;border-style:solid;border-color:black;border-width:1px 0px 0px 0px;">{{getTaskById(child).title}}</button>
         </div>
-        <button class="button" style="border-style:solid;border-color:black;border-width:0.5px 0px 0px 0px;margin:0px;width:100%; font-size:120%;padding:0px 20px 5px 20px;">+</button>
+        <button class="button" ng-click="newChild()" style="border-style:solid;border-color:black;border-width:0.5px 0px 0px 0px;margin:0px;width:100%; font-size:120%;padding:0px 20px 5px 20px;">+</button>
 
     </div>
 </div>
