@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" style="height:100%;font-family: Candara, sans-serif;" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" style="height:100%;font-family: Candara, sans-serif;" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head><!--
     <meta charset="UTF-8">
 -->
@@ -14,7 +15,8 @@
     <style>
     .header{
     height:10%;
-    background-color:#000099;
+    margin:0px;
+    background-color:#181818;
     padding:0px;
     color:white;
     font-size:22px;
@@ -58,7 +60,6 @@
     background-color: #000066;
     color:white;
     }
-
     .dropdown{
     width:18%;
     color:white;
@@ -72,11 +73,11 @@
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
     }
     .motherBoard{
-    position:relative;
-    margin:0px 10px 10px 40px;
-    width:60%;
-    height:70%;
-    background-color: #ccccff;
+    overflow-y:auto;
+    overflow-x:auto;
+    margin: 0px 20px 0px 0px;
+    height: 80%;
+    background-color: #cccccc;
     padding:10px;
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
     }
@@ -85,19 +86,21 @@
     background-size:cover;
     background-repeat:no-repeat;
     background-color:orange;
+    overflow:auto;
     margin: 0px;
     padding: 0px;
-    height: 500px;
+    height: 100%;
     background-color: #f3f3f3;
     }
     .navigator{
-    background-color: #ccccff;
-    height:80%;
+    background-color: #cccccc;
+    height: 90%;
+    float:left;
     width:30%;
-    margin:20px 20px 20px 0px;
-    float:right;
+    padding: 0px;
+    margin: 0% 5% 0% 0%;
     overflow-y:auto;
-    box-shadow: 0 2px 3px 2px rgba(0,0,0,0.24), 0 3px 9px 2px rgba(0,0,0,0.19);
+    box-shadow: 7px 0px 15px -5px;
     }
     .buttonHeader{
     font-family: Candara, sans-serif;
@@ -108,17 +111,19 @@
     margin:0px;
     height:100%;
     width:10%;
-    background-color:#000099;
+    background-color:#181818;
     color:white;
     border-style:solid;
     border-width:0px 0px 0px 0.5px;
     }
     .buttonHeader:hover{
-    background-color:#000077;
+    background-color:#303030;
     }
     .buttonHeader:active{
-    background-color:#000055;
+    background-color:#404040;
     }
+
+
     </style>
 </head>
 <body class="body" ng-app="TF" ng-controller="myCtrl">
@@ -132,71 +137,93 @@
     <!--Top band for heading-->
 </div>
 <div class="navigator">
-    <div style="padding:5px 20px 10px 20px;font-size:120%;text-align:center;margin:0px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #0000b3;font-family: Candara, sans-serif;color: white;">
-        Navigation
-    </div>
+
     <div ng-repeat="(oId,objective) in objectives track by $index">
-        <button class="button" ng-click="updateCurrentTaskById(oId)" style="margin:5px;margin-left:2.5%;margin-right:2.5%; width:95%;border-style:solid;border-width:0px 0px 0px 0px">{{objective.title}}</button>
+        <button class="button" ng-click="updateCurrentTaskById(oId)"
+                style="margin:5px;margin-left:2.5%;margin-right:2.5%; width:95%;border-style:solid;border-width:0px 0px 0px 0px">
+            {{objective.title}}
+        </button>
         <div ng-repeat="e in objective.children track by $index">
-            <button class="button" ng-click="updateCurrentTaskById(e)" style="background-color:#0000ff;margin:5px;margin-left:5%;margin-right:5%; width:90%;border-style:solid;border-width:0px 0px 0px 0px;">{{getTaskById(e).title}}</button>
+            <button class="button" ng-click="updateCurrentTaskById(e)"
+                    style="background-color:#0000ff;margin:5px;margin-left:5%;margin-right:5%; width:90%;border-style:solid;border-width:0px 0px 0px 0px;">
+                {{getTaskById(e).title}}
+            </button>
             <div ng-repeat="s in getTaskById(e).children track by $index">
-                <button class="button" ng-click="updateCurrentTaskById(s)" style="background-color:#3333ff;margin:5px;margin-left:7.5%;margin-right:7.5%; width:85%;border-style:solid;border-width:0px 0px 0px 0px;">{{getTaskById(s).title}}</button>
+                <button class="button" ng-click="updateCurrentTaskById(s)"
+                        style="background-color:#3333ff;margin:5px;margin-left:7.5%;margin-right:7.5%; width:85%;border-style:solid;border-width:0px 0px 0px 0px;">
+                    {{getTaskById(s).title}}
+                </button>
                 <div ng-repeat="st in getTaskById(s).children track by $index">
-                    <button class="button" ng-click="updateCurrentTaskById(st)" style="background-color:#6666ff;margin:5px;margin-left:10%;margin-right:10%; width:80%;border-style:solid;border-width:0px 0px 0px 0px;">{{getTaskById(st).title}}</button>
+                    <button class="button" ng-click="updateCurrentTaskById(st)"
+                            style="background-color:#6666ff;margin:5px;margin-left:10%;margin-right:10%; width:80%;border-style:solid;border-width:0px 0px 0px 0px;">
+                        {{getTaskById(st).title}}
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div style="margin-left:40px;margin-top:10px;">
-    <button class="button" ng-click="updateCurrentTaskById(parent)">&lt; {{getTaskById(parent).title}}</button>
-</div>
-<div class="motherBoard">
+<div style="float: right;width:65%;height:90%;">
 
-    <div class="dropdown" type="text" ng-bind="taskType" ></div>
-
-    <input ng-model="taskTitle" class="inputs" style="font-size:25px;display:inline;width:60%"> </input>
-    <!--the floating box for assigning story points-->
-    <div style="margin:10px;float:right;display:inline;width:50px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
-        <button class="button"
-                style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;"
-                ng-click="incrementStoryPoints()">+
-        </button>
-        <div style="padding:10px 0px 10px 0px;margin-top:0px;margin-bottom:0px;width:100%;text-align:center;">
-            {{storyPoints}}
-        </div>
-        <button class="button"
-                style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;"
-                ng-click="decrementStoryPoints()">-
-        </button>
+    <div style="margin: 0px; height:10%;">
+        <button class="button" ng-click="updateCurrentTaskById(parent)" ng-if="parent != &quot;root&quot;">&lt; {{getTaskById(parent).title}}</button>
     </div>
+    <div class="motherBoard">
+        <div class="dropdown" type="text" ng-bind="taskType"></div>
 
-    <button class="button" style="margin:10px" ng-click="save()">save task</button>
-
-    <div style="margin:10px;padding:5px 0px;display:inline;height: 30px;width:150px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
-        <button class="button" ng-click="statusPrevious()" style="padding:0px 10px 4px 10px;font-size:20px;transform: translateY(-1px);">
-            &lt;</button>
-        <span style="height: 100% width:50px;padding:5px;">{{status}}</span>
-        <button class="button" ng-click="statusNext()" style="padding:0px 10px 4px 10px;font-size:20px;transform: translateY(-1px);">&gt;</button>
-    </div>
-
-
-
-    <div class="inputs" style="width:95%;float:left;">Quarter 2, Sprint 4 Last modified: day date</div>
-
-    <textarea class="inputs" type="text" ng-model="description"
-              style="margin:10px;color:black;width:50%;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;float:left;text-align:left;height:40%;">Description</textarea>
-
-
-    <div style="float:right;height:35%; width:40%; margin:10px;pading:0px">
-        <div style="border-style:solid;border-color:black;border-width:0px 0px 0.5px 0px;text-align:center;margin:0px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #0000b3;padding: 5px 20px 5px 20px;font-family: Candara, sans-serif;color: white;font-size:15px;">
-            Children
+        <input ng-model="taskTitle" class="inputs" style="font-size:25px;display:inline;width:60%"> </input>
+        <!--the floating box for assigning story points-->
+        <div style="margin:10px;float:right;display:inline;width:50px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
+            <button class="button"
+                    style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;"
+                    ng-click="incrementStoryPoints()">+
+            </button>
+            <div style="padding:10px 0px 10px 0px;margin-top:0px;margin-bottom:0px;width:100%;text-align:center;">
+                {{storyPoints}}
+            </div>
+            <button class="button"
+                    style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;"
+                    ng-click="decrementStoryPoints()">-
+            </button>
         </div>
-        <div class="inputs" style="overflow-y:auto;overflow-x:visible;height:70%;width:100%;margin:0px;padding:0px;">
-            <button class="button" ng-repeat="child in children" ng-click="updateCurrentTaskById(child)" style="text-align:left;width:100%;margin:0px;border-style:solid;border-color:black;border-width:1px 0px 0px 0px;">{{getTaskById(child).title}}</button>
-        </div>
-        <button class="button" ng-click="newChild()" style="border-style:solid;border-color:black;border-width:0.5px 0px 0px 0px;margin:0px;width:100%; font-size:120%;padding:0px 20px 5px 20px;">+</button>
 
+        <div style="margin:10px;padding:0px;height: 28px;width:160px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;display:inline-block;">
+            <button class="button" ng-click="statusPrevious()"
+                    style="height: 100%;margin:0px;padding:0px 10px 4px 10px;font-size:20px;">
+                &lt;</button>
+            <span style="margin:5px;align:center;height: 100%; width:50px;padding:5px;">{{status}}</span>
+            <button class="button" ng-click="statusNext()"
+                    style="height: 100%;float:right;margin:0px;display:inline;padding:0px 10px 4px 10px;font-size:20px;">
+                &gt;</button>
+        </div>
+
+        <span>
+        <button class="button" style="margin:10px;display:inline-block;" ng-click="save()">save task</button>
+    </span>
+
+        <div class="inputs" style="width:95%;">Quarter 2, Sprint 4 Last modified: day date</div>
+
+        <textarea class="inputs" type="text" ng-model="description"
+                  style="margin:10px;color:black;width:50%;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;float:left;text-align:left;height:40%;">Description</textarea>
+
+
+        <div style="float:right;height:35%; width:40%; margin:10px;pading:0px">
+            <div style="border-style:solid;border-color:black;border-width:0px 0px 0.5px 0px;text-align:center;margin:0px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #0000b3;padding: 5px 20px 5px 20px;font-family: Candara, sans-serif;color: white;font-size:15px;">
+                Children
+            </div>
+            <div class="inputs"
+                 style="overflow-y:auto;overflow-x:visible;height:70%;width:100%;margin:0px;padding:0px;">
+                <button class="button" ng-repeat="child in children" ng-click="updateCurrentTaskById(child)"
+                        style="text-align:left;width:100%;margin:0px;border-style:solid;border-color:black;border-width:1px 0px 0px 0px;">
+                    {{getTaskById(child).title}}
+                </button>
+            </div>
+            <button class="button" ng-click="newChild()"
+                    style="border-style:solid;border-color:black;border-width:0.5px 0px 0px 0px;margin:0px;width:100%; font-size:120%;padding:0px 20px 5px 20px;">
+                +
+            </button>
+
+        </div>
     </div>
 </div>
 </body>

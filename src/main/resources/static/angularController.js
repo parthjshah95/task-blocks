@@ -40,6 +40,7 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
     }
 
     $scope.getAllTasks();
+    initializeCurrentTask();
 
     function newTask(){
         currentTask.id = createId($scope.taskType);
@@ -292,8 +293,8 @@ angular.module("TF", []).controller('myCtrl', function($scope, $http) {
             }).then(function successCallback(response) {
                    // this callback will be called asynchronously
                    // when the response is available
-                   alert(JSON.stringify(response.data));
                    $scope.getAllTasks();
+                   alert(JSON.stringify(response.data));
                  }, function errorCallback(response) {
                    // called asynchronously if an error occurs
                    // or server returns response with an error status.
