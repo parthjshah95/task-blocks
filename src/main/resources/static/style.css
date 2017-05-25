@@ -1,0 +1,115 @@
+/*Black translucent Header*/
+.header{
+    height:10%;
+    margin:0px;
+    background-color: rgba(20, 20, 20, 0.6);
+    padding:0px;
+    color:white;
+    font-size:22px;
+    font-family: candara, sans-serif;
+    font-weight: bold;
+    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 12px 37px 0 rgba(0,0,0,0.19);
+}
+.buttonHeader{
+    font-family: Candara, sans-serif;
+    display:inline;
+    float:right;
+    vertical-align:center;
+    padding:0px 5px;
+    margin:0px;
+    height:100%;
+    width:10%;
+    background-color: rgba(20, 20, 20, 0.6);
+    color:white;
+    border-style:solid;
+    border-width:0px 0px 0px 0.5px;
+}
+.buttonHeader:hover{
+    background-color:#303030;
+}
+.buttonHeader:active{
+    background-color:#404040;
+}
+/*Body*/
+.body{
+    background-image:url("/images/prisma.jpg");
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-color:orange;
+    overflow:auto;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    background-color: #f3f3f3;
+}
+/* Navigation panel on the left - black translucent*/
+/*------Windows------*/
+
+/* 1.Blue window*/
+.BlueWindow{
+    overflow-y:auto;
+    overflow-x:auto;
+    margin: 0px 20px 0px 0px;
+    height: 80%;
+    background-color: #cccccc;
+    padding:10px;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
+}
+.inputs{
+    font-family: candara, sans-serif;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
+    background-color: #8080ff;
+    border-style: none;
+    margin:10px;
+    padding: 5px;
+    border-width: 0.5px;
+    text-align: center;
+    overflow: auto;
+}
+.blueButton{
+    border:0px;
+    margin:10px 0px 10px 0px;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
+    background-color: #0000b3;
+    padding: 5px 20px 5px 20px;
+    font-family: Candara, sans-serif;
+    color: white;
+    font-size:15px;
+    border-style:none;
+}
+.blueButton:hover{
+    border-style:none;
+    tansform: translateY(-1px);
+    box-shadow: 0 12px 18px 0 rgba(0,0,0,0.24), 0 17px 55px 0 rgba(0,0,0,0.19);
+    background-color: #000080;
+    color:white;
+}
+.blueButton:active{
+    border-style:none;
+    transform: translateY(0.5px);
+    box-shadow: 0 11px 17px 0 rgba(0,0,0,0.24), 0 16px 54px 0 rgba(0,0,0,0.19);
+    background-color: #000066;
+    color:white;
+}
+.dropdown{
+    width:18%;
+    color:white;
+    font-family: candara, sans-serif;
+    font-size:15px;
+    margin:10px;
+    display:inline;
+    padding:10px;
+    background-color: #0000b3;
+    border-style:none;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
+}
+.navigator{
+    background-color: #cccccc;
+    height: 90%;
+    float:left;
+    width:30%;
+    padding: 0px;
+    margin: 0% 5% 0% 0%;
+    overflow-y:auto;
+    box-shadow: 7px 0px 15px -5px;
+}
