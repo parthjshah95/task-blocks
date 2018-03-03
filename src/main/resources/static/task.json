@@ -1,0 +1,61 @@
+{
+	"tasks": {
+		"Epics": {
+			"id": "Epic.1",
+			"title": "Placements",
+			"type": "Epic",
+			"parent": "Objective.1",
+			"children": [
+				{
+					"id": "Story.3"
+				}
+			],
+			"associates": [
+				{
+					"id": "Story.8"
+				}
+			],
+			"points": 3,
+			"description": "This epic is for all the preparations needed for the campus-placement season",
+			"status": "Parked",
+			"sprints": [
+				{
+					"week": 1,
+					"quarter": 2,
+					"year": 18
+				},
+				{
+					"week": 1,
+					"quarter": 2,
+					"year": 18
+				},
+				{
+					"week": 1,
+					"quarter": 2,
+					"year": 18
+				},
+				{
+					"week": 1,
+					"quarter": 2,
+					"year": 18
+				},
+				{
+					"week": 1,
+					"quarter": 2,
+					"year": 18
+				}
+			],
+			"estimateOfTime": {
+				"hours": 0,
+				"days": 0,
+				"weeks": 0,
+				"months": 0
+			},
+			"deadline": {
+				"day": 1,
+				"month": 2,
+				"year": 2018
+			}
+		}
+	}
+}

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" style="height:100%;font-family: Candara, sans-serif;" lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en">
 <head><!--
     <meta charset="UTF-8">
 -->
@@ -10,22 +9,20 @@
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
     <!--<script src="../static/angularController.js"></script>-->
 
-    <script type="text/javascript" th:src="@{/angular.min.js}"/>
-    <script type="text/javascript" th:src="@{/angularController.js}"/>
-    <script type="text/javascript" th:src="@{/jquery-3.2.1.min}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+    <script type="text/javascript" src="js/angular.min.js"/>
+    <script type="text/javascript" src="js/angularController.js"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
 </head>
-<body class="body" ng-app="TF" ng-controller="myCtrl">
+<body ng-app="TF" ng-controller="myCtrl">
 
 <div class="header">
-    <img th:src="@{/images/funnel.png}"
-         style="display:inline;margin:0px;height:100%;vertical-align:middle;width:50px;padding:0px;"/>
-    <h1 style="margin:5px 0px 5px 10px;display:inline;padding:10px 0px 10px 0px;vertical-align:middle;">Task Funnel</h1>
-    <button class="buttonHeader" ng-click="newObjective()">new objective</button>
-    <button class="buttonHeader" ng-click="newFloat()">new float</button>
+    <img src="images/funnel.png"/>
+    <div class="headingText">Task Funnel</div>
+    <button class="buttonHeader">new</button>
     <!--Top band for heading-->
 </div>
-<div class="BlueWindow">
+
+<!--<div class="taskWindow">
 
     <div ng-repeat="(oId,objective) in objectives track by $index">
         <button class="blueButton" ng-click="updateCurrentTaskById(oId)"
@@ -51,8 +48,8 @@
             </div>
         </div>
     </div>
-</div>
-<div style="float: right;width:65%;height:90%;">
+</div>-->
+<!--<div style="float: right;width:65%;height:90%;">
 
     <div style="margin: 0px; height:10%;">
         <button class="blueButton" ng-click="updateCurrentTaskById(parent)" ng-if="parent != &quot;root&quot;">&lt; {{getTaskById(parent).title}}</button>
@@ -61,7 +58,7 @@
         <div class="dropdown" type="text" ng-bind="taskType"></div>
 
         <input ng-model="taskTitle" class="inputs" style="font-size:25px;display:inline;width:60%"> </input>
-        <!--the floating box for assigning story points-->
+        &lt;!&ndash;the floating box for assigning story points&ndash;&gt;
         <div style="margin:10px;float:right;display:inline;width:50px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
             <button class="blueButton"
                     style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;"
@@ -114,6 +111,6 @@
 
         </div>
     </div>
-</div>
+</div>-->
 </body>
 </html>
