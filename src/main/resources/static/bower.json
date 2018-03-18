@@ -1,0 +1,25 @@
+{
+  "name": "task-blocks",
+  "homepage": "https://github.com/xorcist-parth/task-funnel-web-",
+  "authors": [
+    "parthjshah95@gmail.com"
+  ],
+  "description": "Solve the puzzle of life. Managing your life is now as simple as solving a jigsaw puzzle. Think of it as Trello, but with more fun and open source.",
+  "main": "index.html",
+  "keywords": [
+    "blockly",
+    "tasks"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "google-blockly": "*",
+    "vue": "^2.5.16"
+  }
+}

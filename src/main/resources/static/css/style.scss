@@ -1,9 +1,9 @@
 
-@header-height:60px;
-@transparent-black:rgba(20, 20, 20, 0.6);
-@transparent-black-dark:rgba(20,20,20,0.8);
-@transparent-orange:rgba(247, 145, 44, 0.6);
-@orange:rgb(247, 145, 44);
+$header-height:50px;
+$transparent-black:rgba(20, 20, 20, 0.6);
+$transparent-black-dark:rgba(20,20,20,0.8);
+$transparent-orange:rgba(247, 145, 44, 0.6);
+$orange:rgb(247, 145, 44);
 
 html{
     height:100%;
@@ -25,24 +25,25 @@ body{
 
 /*Black translucent Header*/
 .header{
-    height:@header-height;
+    height:$header-height;
     margin:0px;
-    background-color:@transparent-black;
+    background-color:$transparent-black;
     padding:0px;
     color:white;
     font-size:0px;
     box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 12px 37px 0 rgba(0,0,0,0.19);
 }
 img{
-    margin:20px;
-    width:@header-height - ($margin * 2);
-    height:@header-height - ($margin * 2);
+    $margin: 20px;
+    margin:$margin;
+    width:$header-height - ($margin * 2);
+    height:$header-height - ($margin * 2);
     display:inline-block;
 }
 .headingText{
     margin-left:20px;
     display:inline-block;
-    line-height:@header-height;
+    line-height:$header-height;
     font-size:30px;
     position:absolute;
     font-weight: bold;
@@ -56,7 +57,7 @@ img{
     margin:0px;
     height:100%;
     width:10%;
-    background-color: @transparent-black-dark;
+    background-color: $transparent-black-dark;
     color:white;
     border-style:solid;
     border-width:0px 0px 0px 0.5px;
@@ -84,14 +85,14 @@ img{
 .taskWindow{
     overflow-y:auto;
     overflow-x:hidden;
-    height: calc(100% - @header-height - 1px);
-    background-color: @transparent-orange;
+    height: calc(100% - $header-height - 1px);
+    background-color: $transparent-orange;
     padding:10px;
     //box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);
     width:30%;
     border:0.5px solid black;
     position:absolute;
-    top:@header-height + 0.5px;
+    top:$header-height + 0.5px;
     right:0px;
 }
 .input{
@@ -112,13 +113,13 @@ button{
     border:none;
 }
 .orange{
-    background:@orange;
+    background:$orange;
     color:white;
     &:hover{
-        background:lighten(@orange, 10%)
+        background:lighten($orange, 10%)
     }
     &:active{
-     background:@orange;
+     background:$orange;
     }
 }
 

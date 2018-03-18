@@ -1,116 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><!--
-    <meta charset="UTF-8">
--->
-    <meta http-equiv="Content-Type" content="charset=UTF-8"/>
-    <title>Task Funnel</title>
-
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
-    <!--<script src="../static/angularController.js"></script>-->
-
-    <script type="text/javascript" src="js/angular.min.js"/>
-    <script type="text/javascript" src="js/angularController.js"/>
+<head>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="shortcut icon" type="image/ico" href="bower_components/google-blockly/appengine/favicon.ico"/>
+    <script type="text/javascript" src="bower_components/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="js/vueController.js"></script>
+    <script type="text/javascript" src="js/Model/Task.js"></script>
 </head>
-<body ng-app="TF" ng-controller="myCtrl">
-
+<body id="app">
 <div class="header">
-    <img src="images/funnel.png"/>
-    <div class="headingText">Task Funnel</div>
-    <button class="buttonHeader">new</button>
-    <!--Top band for heading-->
+    <img src="bower_components/google-blockly/appengine/favicon.ico"/>
+    <div class="headingText">Task Blocks</div>
 </div>
-
-<!--<div class="taskWindow">
-
-    <div ng-repeat="(oId,objective) in objectives track by $index">
-        <button class="blueButton" ng-click="updateCurrentTaskById(oId)"
-                style="margin:5px;margin-left:2.5%;margin-right:2.5%; width:95%;border-style:solid;border-width:0px 0px 0px 0px">
-            {{objective.title}}
-        </button>
-        <div ng-repeat="e in objective.children track by $index">
-            <button class="blueButton" ng-click="updateCurrentTaskById(e)"
-                    style="background-color:#0000ff;margin:5px;margin-left:5%;margin-right:5%; width:90%;border-style:solid;border-width:0px 0px 0px 0px;">
-                {{getTaskById(e).title}}
-            </button>
-            <div ng-repeat="s in getTaskById(e).children track by $index">
-                <button class="blueButton" ng-click="updateCurrentTaskById(s)"
-                        style="background-color:#3333ff;margin:5px;margin-left:7.5%;margin-right:7.5%; width:85%;border-style:solid;border-width:0px 0px 0px 0px;">
-                    {{getTaskById(s).title}}
-                </button>
-                <div ng-repeat="st in getTaskById(s).children track by $index">
-                    <button class="blueButton" ng-click="updateCurrentTaskById(st)"
-                            style="background-color:#6666ff;margin:5px;margin-left:10%;margin-right:10%; width:80%;border-style:solid;border-width:0px 0px 0px 0px;">
-                        {{getTaskById(st).title}}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
-<!--<div style="float: right;width:65%;height:90%;">
-
-    <div style="margin: 0px; height:10%;">
-        <button class="blueButton" ng-click="updateCurrentTaskById(parent)" ng-if="parent != &quot;root&quot;">&lt; {{getTaskById(parent).title}}</button>
-    </div>
-    <div class="BlueWindow">
-        <div class="dropdown" type="text" ng-bind="taskType"></div>
-
-        <input ng-model="taskTitle" class="inputs" style="font-size:25px;display:inline;width:60%"> </input>
-        &lt;!&ndash;the floating box for assigning story points&ndash;&gt;
-        <div style="margin:10px;float:right;display:inline;width:50px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;">
-            <button class="blueButton"
-                    style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;"
-                    ng-click="incrementStoryPoints()">+
-            </button>
-            <div style="padding:10px 0px 10px 0px;margin-top:0px;margin-bottom:0px;width:100%;text-align:center;">
-                {{storyPoints}}
-            </div>
-            <button class="blueButton"
-                    style="font-size:160%;padding:0px;width:100%;margin-top:0px;margin-bottom:0px;text-align:center;"
-                    ng-click="decrementStoryPoints()">-
-            </button>
-        </div>
-
-        <div style="margin:10px;padding:0px;height: 28px;width:160px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #8080ff;display:inline-block;">
-            <button class="blueButton" ng-click="statusPrevious()"
-                    style="height: 100%;margin:0px;padding:0px 10px 4px 10px;font-size:20px;">
-                &lt;</button>
-            <span style="margin:5px;align:center;height: 100%; width:50px;padding:5px;">{{status}}</span>
-            <button class="blueButton" ng-click="statusNext()"
-                    style="height: 100%;float:right;margin:0px;display:inline;padding:0px 10px 4px 10px;font-size:20px;">
-                &gt;</button>
-        </div>
-
-        <span>
-        <button class="blueButton" style="margin:10px;display:inline-block;" ng-click="save()">save task</button>
-    </span>
-
-        <div class="inputs" style="width:95%;">Quarter 2, Sprint 4 Last modified: day date</div>
-
-        <textarea class="inputs" type="text" ng-model="description"
-                  style="margin:10px;color:black;width:50%;font-family: candara;border-size:0px;border-style:none; background-color: #8080ff;float:left;text-align:left;height:40%;">Description</textarea>
-
-
-        <div style="float:right;height:35%; width:40%; margin:10px;pading:0px">
-            <div style="border-style:solid;border-color:black;border-width:0px 0px 0.5px 0px;text-align:center;margin:0px;box-shadow: 0 2px 3px 0 rgba(0,0,0,0.24), 0 3px 9px 0 rgba(0,0,0,0.19);background-color: #0000b3;padding: 5px 20px 5px 20px;font-family: Candara, sans-serif;color: white;font-size:15px;">
-                Children
-            </div>
-            <div class="inputs"
-                 style="overflow-y:auto;overflow-x:visible;height:70%;width:100%;margin:0px;padding:0px;">
-                <button class="blueButton" ng-repeat="child in children" ng-click="updateCurrentTaskById(child)"
-                        style="text-align:left;width:100%;margin:0px;border-style:solid;border-color:black;border-width:1px 0px 0px 0px;">
-                    {{getTaskById(child).title}}
-                </button>
-            </div>
-            <button class="blueButton" ng-click="newChild()"
-                    style="border-style:solid;border-color:black;border-width:0.5px 0px 0px 0px;margin:0px;width:100%; font-size:120%;padding:0px 20px 5px 20px;">
-                +
-            </button>
-
-        </div>
-    </div>
-</div>-->
+<div id="blocklyArea"></div>
 </body>
 </html>
