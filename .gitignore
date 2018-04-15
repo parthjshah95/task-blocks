@@ -1,3 +1,8 @@
 target/**
 .idea/**
 taskfunnelweb.iml
+src/main/resources/static/bower_components/**
+src/main/resources/static/css/.sass-cache/**
+src/main/resources/static/css/*.map
+*.patch
+src/main/resources/static/css/*.css

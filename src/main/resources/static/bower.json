@@ -4,7 +4,7 @@
   "authors": [
     "parthjshah95@gmail.com"
   ],
-  "description": "Solve the puzzle of life. Managing your life is now as simple as solving a jigsaw puzzle. Think of it as Trello, but with more fun and open source.",
+  "description": "blockly for time / task management",
   "main": "index.html",
   "keywords": [
     "blockly",
