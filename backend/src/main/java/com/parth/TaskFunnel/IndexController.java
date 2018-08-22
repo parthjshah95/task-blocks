@@ -1,4 +1,4 @@
-package com.parth.TaskFunnel;
+package main.java.com.parth.TaskFunnel;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -66,6 +66,14 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /\.(woff2?|eof|ttf|otf)(\?.*)?$/,
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[hash:7].[ext]',
+          publicPath: '../'
+        }
       }
     ]
   },

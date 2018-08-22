@@ -1,6 +1,6 @@
+.idea/
 backend/target/**
 backend/.idea/**
-backend/task-blocks.iml
 backend/src/main/resources/static/bower_components/**
 backend/src/main/resources/static/css/.sass-cache/**
 backend/src/main/resources/static/css/*.map
@@ -9,3 +9,4 @@ backend/src/main/resources/static/css/*.css
 frontend/node_modules/**
 frontend/.editorconfig
 frontend/.babelrc
+*.iml
