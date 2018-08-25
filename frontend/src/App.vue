@@ -2,9 +2,9 @@
   <div id="app">
     <Header></Header>
     <TaskWindow v-if="showTaskInfo" id="task-window" v-bind:initTask="initTask"></TaskWindow>
-    <Container>
+    <!-- <Container>
       <Draggable>foo</Draggable>
-    </Container>
+    </Container> -->
   </div>
 </template>
 
@@ -34,11 +34,14 @@ export default {
 <style lang="scss">
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
+// for markdown editor for description in task window
 .CodeMirror{
-  height: 100px;
+  height: 150px;
   min-height:100px;
   overflow-y: scroll;
 }
+
+
 html {
   height: 100%;
 }

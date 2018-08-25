@@ -1,40 +1,51 @@
 <template>
-<form class='form-horizontal' action="#">
-    <div class="form-group" v-on:keyup.esc="cancel()">
-        <input class="form-control mb-2" v-model="task.title" placeholder="Title">
-        <div class="mb-2 btn-group midBar">
-            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{task.type}}
-            </button>
-            <div class="dropdown-menu">
-                <button class="dropdown-item btn-dark" v-for="t in task.tList" v-bind:key="t" v-on:click="task.type=t">
-                    {{t}}
+<div>
+    <EditButton class="edit mb-3" v-if="readOnly" v-on:click.native="edit()">edit</EditButton>
+    <CrossButton class="esc mb-3" v-if="!readOnly" v-on:click.native="cancel()">esc</CrossButton>
+    <TickButton class="okay mb-3" v-if="!readOnly" v-on:click.native="save()">save</TickButton>
+    <form class='form-horizontal' action="#">
+        <input class="form-control mb-2" v-if="!readOnly" v-model="task.title" placeholder="Title">
+        <h4 class="mb-2 card-title" v-if="readOnly">{{this.task.title? this.task.title: "task title"}}</h4>
+        <div class="btn-group midBar" v-bind:class="readOnly? '': ' mb-2'">
+            <div v-if="!readOnly">
+                <button type="button" class="btn btn-sm btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{task.type}}
                 </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item btn-sm btn-dark" v-for="t in task.tList" v-bind:key="t" v-on:click="task.type=t">
+                        {{t}}
+                    </button>
+                </div>
             </div>
             <div class="storyPoints">
-                <div class="input-group-prepend">
-                    <button v-on:click="decreasePoints()" type="button" class="btn btn-dark minus"></button>
-                </div>
-                <div class="value">{{task.points}}</div>
-                <div class="input-group-append">
-                    <button v-on:click="increasePoints()" type="button" class="btn btn-dark plus"></button>
+                <div v-if="!readOnly" v-on:click="decreasePoints()" class="badge badge-dark c-badge-button">-</div>
+                <div class="badge badge-dark c-badge">{{task.points}}</div>
+                <div v-if="!readOnly" v-on:click="increasePoints()" class="badge badge-dark c-badge-button">+</div>
+            </div>
+            <div>
+                <div v-if="readOnly" class="btn btn-sm btn-outline-dark">{{task.type}}</div>
+                <div v-if="readOnly" class="btn btn-sm" v-bind:class="task.stClasses[task.stList.indexOf(task.status)]">
+                    {{task.status}}
                 </div>
             </div>
         </div>
-        <div class="btn-group btn-group-toggle mb-2" data-toggle="buttons">
+        <div v-if="!readOnly" class="btn-group btn-group-toggle mb-2" data-toggle="buttons">
             <label v-for="(st, i) in task.stList" :key="i" class="btn btn-sm" v-on:click="task.status = st"
                 v-bind:class="task.status==st? task.stClasses[i]: 'btn-secondary'">
                 <input type="radio" autocomplete="off"> {{st}}
             </label>
         </div>
-        <markdown-editor class="form-control mb-2" v-model="task.description" v-bind:configs="editorConfig"></markdown-editor>
-        <button class="btn btn-primary">Save</button>
-        <button class="btn btn-danger">Cancel</button>        
-    </div>
-</form>
+        <div v-if="readOnly && task.description" class="form-control mb-2" v-html="rendered"></div>
+        <markdown-editor v-if="!readOnly" class="form-control mb-2" v-model="task.description" v-bind:configs="editorConfig"></markdown-editor>       
+    </form>
+</div>
 </template>
 <script>
-import markdownEditor from 'vue-simplemde/src/markdown-editor';
+import MarkdownEditor from 'vue-simplemde/src/markdown-editor';
+import TickButton from './tick-button.vue';
+import CrossButton from './cross-button.vue';
+import EditButton from './edit-button.vue';
+import marked from 'marked/marked.min.js';
 
 function next(current, list){
     return list[Math.min(list.indexOf(current) + 1, list.length - 1)]
@@ -45,16 +56,23 @@ function previous(current, list){
 }
 
 export default {
+    name: 'task-window',
+    components:{TickButton, CrossButton, MarkdownEditor, EditButton},
     props:['initTask'],
     data:function(){
+        var task = this.initTask;
         return {
-            task: this.initTask,
-            readOnly: true,
+            task: task,
+            readOnly: false,
             editorConfig: {
-                placeholder: "Description",
-                hideIcons: true
+                placeholder: "Description"
             }
         };
+    },
+    computed:{
+        rendered: function(){
+            return marked(this.task.description);
+        }
     },
     methods:{
         increasePoints: function(){
@@ -73,7 +91,7 @@ export default {
             // TODO send data
             this.readOnly = true;
         },
-        edit: function(task) {
+        edit: function() {
             this.readOnly = false;
         },
         cancel: function(){
@@ -87,21 +105,13 @@ export default {
 @import "node_modules/bootstrap/scss/bootstrap";
 @import '~simplemde/dist/simplemde.min.css';
 
-.button{
-    padding: 0px 10px 5px;
-    &:focus{
-        outline: 0;     
-    }
-    &:active{
-        background-color: darken(theme-color("primary"), 100%);
-    }
-}
 .midBar{
     font-weight: 500;    
     width:100%;
 }
 .storyPoints{
     position:absolute;
+    height: 40px;
     right: 0px;    
     div{
         display:inline-block;
@@ -112,19 +122,34 @@ export default {
         padding-right: $side;
     }
 }
-.plus{
-    @extend .button;
-    &:after{
-        content:'\002B';
-    }
+.c-badge{
+    font-family: 'Courier New', Courier, monospace;    
 }
-.minus{
-    @extend .button;
-    &:after{
-        content:'\2212';
+.c-badge-button{
+    @extend .c-badge;
+    cursor: pointer;
+    &:focus{
+        outline: 0;     
+    }
+    &:active{
+        background-color: lighten(theme-color("dark"), 30%);
     }
 }
 span{
     margin: 0px 10px;
+}
+.topBtn{
+    float: right;
+    cursor: pointer;
+}
+.okay{
+    @extend .topBtn;
+}
+.esc{
+    @extend .topBtn;
+    float: left;
+}
+.edit{
+    @extend .topBtn;
 }
 </style>
