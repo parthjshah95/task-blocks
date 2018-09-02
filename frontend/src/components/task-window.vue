@@ -1,43 +1,47 @@
 <template>
 <div>
-    <EditButton class="edit mb-3" v-if="readOnly" v-on:click.native="edit()">edit</EditButton>
-    <CrossButton class="esc mb-3" v-if="!readOnly" v-on:click.native="cancel()">esc</CrossButton>
-    <TickButton class="okay mb-3" v-if="!readOnly" v-on:click.native="save()">save</TickButton>
-    <form class='form-horizontal' action="#">
-        <input class="form-control mb-2" v-if="!readOnly" v-model="task.title" placeholder="Title">
-        <h4 class="mb-2 card-title" v-if="readOnly">{{this.task.title? this.task.title: "task title"}}</h4>
-        <div class="btn-group midBar" v-bind:class="readOnly? '': ' mb-2'">
-            <div v-if="!readOnly">
-                <button type="button" class="btn btn-sm btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{task.type}}
-                </button>
-                <div class="dropdown-menu">
-                    <button class="dropdown-item btn-sm btn-dark" v-for="t in task.tList" v-bind:key="t" v-on:click="task.type=t">
-                        {{t}}
+    <div class="card c-card">
+        <div v-show="!details" v-on:mouseenter="showDetails()" class="card-body c-card-body" v-bind:class="stCardClasses[task.stList.indexOf(task.status)]">
+            <span class="card-title mb-1">{{title}}</span>
+            <div class="badge badge-dark c-badge float-right">{{task.points}}</div>
+        </div>
+        <form class='card-body c-card-body bg-light' v-show="details" v-on:mouseleave="hideDetails()" action="#">
+            <EditButton class="edit mb-3" v-if="readOnly" v-on:click.native="edit()">edit</EditButton>
+            <input class="form-control mb-2" v-if="!readOnly" v-model="task.title" placeholder="Title">
+            <h5 class="card-title mb-1" v-if="readOnly">{{title}}</h5>
+            <div class="card-text" v-if="readOnly && task.description" v-html="rendered"></div>
+            <div class="btn-group midBar" v-bind:class="readOnly? '': ' mb-2'">
+                <div v-if="!readOnly">
+                    <button type="button" class="btn btn-sm btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{task.type}}
                     </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item btn-sm btn-dark" v-for="t in task.tList" v-bind:key="t" v-on:click="task.type=t">
+                            {{t}}
+                        </button>
+                    </div>
+                </div>
+                <div class="storyPoints">
+                    <div v-if="!readOnly" v-on:click="decreasePoints()" class="badge badge-dark c-badge-button">-</div>
+                    <div class="badge badge-dark c-badge">{{task.points}}</div>
+                    <div v-if="!readOnly" v-on:click="increasePoints()" class="badge badge-dark c-badge-button">+</div>
+                </div>
+                <div>
+                    <div v-if="readOnly" class="btn btn-sm btn-outline-dark">{{task.type}}</div>
+                    <div v-if="readOnly" class="btn btn-sm" v-bind:class="stClasses[task.stList.indexOf(task.status)]">
+                        {{task.status}}
+                    </div>
                 </div>
             </div>
-            <div class="storyPoints">
-                <div v-if="!readOnly" v-on:click="decreasePoints()" class="badge badge-dark c-badge-button">-</div>
-                <div class="badge badge-dark c-badge">{{task.points}}</div>
-                <div v-if="!readOnly" v-on:click="increasePoints()" class="badge badge-dark c-badge-button">+</div>
+            <div v-if="!readOnly" class="btn-group btn-group-toggle mb-2" data-toggle="buttons">
+                <label v-for="(st, i) in task.stList" :key="i" class="btn btn-sm" v-on:click="task.status = st"
+                    v-bind:class="task.status==st? stClasses[i]: 'btn-secondary'">
+                    <input type="radio" autocomplete="off"> {{st}}
+                </label>
             </div>
-            <div>
-                <div v-if="readOnly" class="btn btn-sm btn-outline-dark">{{task.type}}</div>
-                <div v-if="readOnly" class="btn btn-sm" v-bind:class="task.stClasses[task.stList.indexOf(task.status)]">
-                    {{task.status}}
-                </div>
-            </div>
-        </div>
-        <div v-if="!readOnly" class="btn-group btn-group-toggle mb-2" data-toggle="buttons">
-            <label v-for="(st, i) in task.stList" :key="i" class="btn btn-sm" v-on:click="task.status = st"
-                v-bind:class="task.status==st? task.stClasses[i]: 'btn-secondary'">
-                <input type="radio" autocomplete="off"> {{st}}
-            </label>
-        </div>
-        <div v-if="readOnly && task.description" class="form-control mb-2" v-html="rendered"></div>
-        <markdown-editor v-if="!readOnly" class="form-control mb-2" v-model="task.description" v-bind:configs="editorConfig"></markdown-editor>       
-    </form>
+            <markdown-editor v-if="!readOnly" v-model="task.description" v-bind:configs="editorConfig"></markdown-editor>       
+        </form>
+    </div>
 </div>
 </template>
 <script>
@@ -63,18 +67,32 @@ export default {
         var task = this.initTask;
         return {
             task: task,
-            readOnly: false,
+            details: false,
+            readOnly: true,
+            checkbox: false,
+            stClasses: ["btn-info", "btn-danger", "btn-warning", "btn-success"],
+            stCardClasses:["card-info", "card-danger", "card-warning", "card-success"],            
             editorConfig: {
                 placeholder: "Description"
             }
         };
     },
     computed:{
+        title: function(){
+            return this.task.title? this.task.title: "task title"
+        },
         rendered: function(){
             return marked(this.task.description);
         }
     },
     methods:{
+        showDetails: function(){
+            this.details = true;
+        },
+        hideDetails: function(){
+            this.details = false;
+            this.readOnly = true;
+        },
         increasePoints: function(){
             this.task.points = next(this.task.points, this.task.pList);
         },
@@ -101,10 +119,39 @@ export default {
 }
 
 </script>
+<style lang="scss">
+$card-width:270px;
+
+.CodeMirror{
+  height: 150px;
+  min-height:100px;
+  overflow-y: scroll;
+}
+.c-card{
+    width: $card-width;
+}
+</style>
+
 <style lang="scss" scoped>
 @import "node_modules/bootstrap/scss/bootstrap";
 @import '~simplemde/dist/simplemde.min.css';
 
+.c-card-body{
+    padding: 10px;    
+}
+$card-lighten-value:50%;
+.card-info{
+    background-color: lighten(theme-color("info"), $card-lighten-value);
+}
+.card-danger{
+    background-color: lighten(theme-color("danger"), $card-lighten-value / 2);    
+}
+.card-warning{
+    background-color: lighten(theme-color("warning"), $card-lighten-value / 2);    
+}
+.card-success{
+    background-color: lighten(theme-color("success"), $card-lighten-value);    
+}
 .midBar{
     font-weight: 500;    
     width:100%;
@@ -141,6 +188,7 @@ span{
 .topBtn{
     float: right;
     cursor: pointer;
+    display: inline-block;
 }
 .okay{
     @extend .topBtn;

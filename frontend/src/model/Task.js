@@ -15,8 +15,7 @@ export default function Task(args){
 
     var statuses = ["Parked","To Do","In Progress","Done"];//list of possible statuses
     this.stList = statuses;
-    this.stClasses = ["btn-info", "btn-danger", "btn-warning", "btn-success"];
-    var taskTypes = ["Objective","Epic","Story","Sub-task","Float","Sub-float"];
+    var taskTypes = ["Objective","Epic","Story","Sub-task","Float","Sub-float", "Habit"];
     this.tList = taskTypes;
     var fibonacciSeries = [1, 2, 3, 5, 8, 13];
     this.pList = fibonacciSeries;
