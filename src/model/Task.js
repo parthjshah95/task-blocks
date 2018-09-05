@@ -15,14 +15,11 @@ export default function Task(args){
 
     var statuses = ["Parked","To Do","In Progress","Done"];//list of possible statuses
     this.stList = statuses;
-    var taskTypes = ["Objective","Epic","Story","Sub-task","Float","Sub-float", "Habit"];
-    this.tList = taskTypes;
     var fibonacciSeries = [1, 2, 3, 5, 8, 13];
     this.pList = fibonacciSeries;
 
     if(typeof args === "undefined"){
         this.id = createId();
-        this.type = taskTypes[4];
         this.title = "";
         this.parent = {};
         this.children = [];

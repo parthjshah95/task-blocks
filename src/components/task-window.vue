@@ -1,45 +1,42 @@
 <template>
 <div>
     <div class="card c-card">
-        <div v-show="!details" v-on:mouseenter="showDetails()" class="card-body c-card-body" v-bind:class="stCardClasses[task.stList.indexOf(task.status)]">
-            <span class="card-title mb-1">{{title}}</span>
+        <div v-if="!details" v-on:mouseenter="showDetails()" class="card-body c-card-body" v-bind:class="stCardClasses[task.stList.indexOf(task.status)]">
+            <span class="title mb-1">{{title}}</span>
             <div class="badge badge-dark c-badge float-right">{{task.points}}</div>
         </div>
-        <form class='card-body c-card-body bg-light' v-show="details" v-on:mouseleave="hideDetails()" action="#">
-            <EditButton class="edit mb-3" v-if="readOnly" v-on:click.native="edit()">edit</EditButton>
-            <input class="form-control mb-2" v-if="!readOnly" v-model="task.title" placeholder="Title">
-            <h5 class="card-title mb-1" v-if="readOnly">{{title}}</h5>
-            <div class="card-text" v-if="readOnly && task.description" v-html="rendered"></div>
-            <div class="btn-group midBar" v-bind:class="readOnly? '': ' mb-2'">
-                <div v-if="!readOnly">
-                    <button type="button" class="btn btn-sm btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{task.type}}
-                    </button>
-                    <div class="dropdown-menu">
-                        <button class="dropdown-item btn-sm btn-dark" v-for="t in task.tList" v-bind:key="t" v-on:click="task.type=t">
-                            {{t}}
-                        </button>
-                    </div>
-                </div>
-                <div class="storyPoints">
-                    <div v-if="!readOnly" v-on:click="decreasePoints()" class="badge badge-dark c-badge-button">-</div>
-                    <div class="badge badge-dark c-badge">{{task.points}}</div>
-                    <div v-if="!readOnly" v-on:click="increasePoints()" class="badge badge-dark c-badge-button">+</div>
-                </div>
-                <div>
-                    <div v-if="readOnly" class="btn btn-sm btn-outline-dark">{{task.type}}</div>
-                    <div v-if="readOnly" class="btn btn-sm" v-bind:class="stClasses[task.stList.indexOf(task.status)]">
-                        {{task.status}}
-                    </div>
-                </div>
+        <div v-if="details && readOnly" v-on:mouseleave="hideDetails()" class="card-body c-card-body" v-bind:class="stCardClasses[task.stList.indexOf(task.status)]">
+            <div class="edit mb-2">
+                <div v-if="readOnly" class="badge badge-dark c-badge">{{task.points}}</div>
+                <EditButton v-on:click.native="edit()">edit</EditButton>
             </div>
-            <div v-if="!readOnly" class="btn-group btn-group-toggle mb-2" data-toggle="buttons">
+            <h4 class="mb-1" v-bind:class="task.status==task.stList[task.stList.length - 1]?'text-decoration: line-through':''">{{title}}</h4>
+            <div class="btn-group btn-group-toggle mb-2" data-toggle="buttons">
                 <label v-for="(st, i) in task.stList" :key="i" class="btn btn-sm" v-on:click="task.status = st"
                     v-bind:class="task.status==st? stClasses[i]: 'btn-secondary'">
                     <input type="radio" autocomplete="off"> {{st}}
                 </label>
             </div>
-            <markdown-editor v-if="!readOnly" v-model="task.description" v-bind:configs="editorConfig"></markdown-editor>       
+            <div class="card-text" v-if="readOnly && task.description" v-html="rendered"></div>
+        </div>
+        <form v-if="details && !readOnly" class='card-body c-card-body bg-light' action="#">
+            <CrossButton class="esc mb-3" v-on:click.native="cancel()">esc</CrossButton>
+            <TickButton class="okay mb-3" v-on:click.native="save()">save</TickButton>
+            <input class="form-control mb-2" v-model="task.title" placeholder="Title">
+            <div class="btn-group midBar mb-2">
+                <div class="storyPoints">
+                    <div v-on:click="decreasePoints()" class="badge badge-dark c-badge-button">-</div>
+                    <div class="badge badge-dark c-badge">{{task.points}}</div>
+                    <div v-on:click="increasePoints()" class="badge badge-dark c-badge-button">+</div>
+                </div>
+            </div>
+            <div class="btn-group btn-group-toggle mb-2" data-toggle="buttons">
+                <label v-for="(st, i) in task.stList" :key="i" class="btn btn-sm" v-on:click="task.status = st"
+                    v-bind:class="task.status==st? stClasses[i]: 'btn-secondary'">
+                    <input type="radio" autocomplete="off"> {{st}}
+                </label>
+            </div>
+            <markdown-editor v-model="task.description" v-bind:configs="editorConfig"></markdown-editor>       
         </form>
     </div>
 </div>
@@ -49,6 +46,7 @@ import MarkdownEditor from 'vue-simplemde/src/markdown-editor';
 import TickButton from './tick-button.vue';
 import CrossButton from './cross-button.vue';
 import EditButton from './edit-button.vue';
+import ArrowButton from './arrow-button.vue';
 import marked from 'marked/marked.min.js';
 
 function next(current, list){
@@ -61,7 +59,7 @@ function previous(current, list){
 
 export default {
     name: 'task-window',
-    components:{TickButton, CrossButton, MarkdownEditor, EditButton},
+    components:{TickButton, CrossButton, MarkdownEditor, EditButton, ArrowButton},
     props:['initTask'],
     data:function(){
         var task = this.initTask;
@@ -70,8 +68,8 @@ export default {
             details: false,
             readOnly: true,
             checkbox: false,
-            stClasses: ["btn-info", "btn-danger", "btn-warning", "btn-success"],
-            stCardClasses:["card-info", "card-danger", "card-warning", "card-success"],            
+            stClasses: ["btn-light", "btn-primary", "btn-warning", "btn-success"],
+            stCardClasses:["card-parked", "card-todo", "card-inprogress", "card-done"],            
             editorConfig: {
                 placeholder: "Description"
             }
@@ -137,19 +135,19 @@ $card-width:270px;
 @import '~simplemde/dist/simplemde.min.css';
 
 .c-card-body{
-    padding: 10px;    
+    padding: 10px;
 }
-$card-lighten-value:50%;
-.card-info{
-    background-color: lighten(theme-color("info"), $card-lighten-value);
+$card-lighten-value:25%;
+.card-parked{
+    background-color: lighten(theme-color("light"), $card-lighten-value);
 }
-.card-danger{
-    background-color: lighten(theme-color("danger"), $card-lighten-value / 2);    
+.card-todo{
+    background-color: lighten(theme-color("primary"), $card-lighten-value);    
 }
-.card-warning{
-    background-color: lighten(theme-color("warning"), $card-lighten-value / 2);    
+.card-inprogress{
+    background-color: lighten(theme-color("warning"), $card-lighten-value);    
 }
-.card-success{
+.card-done{
     background-color: lighten(theme-color("success"), $card-lighten-value);    
 }
 .midBar{
@@ -157,9 +155,6 @@ $card-lighten-value:50%;
     width:100%;
 }
 .storyPoints{
-    position:absolute;
-    height: 40px;
-    right: 0px;    
     div{
         display:inline-block;
     }        
@@ -199,5 +194,8 @@ span{
 }
 .edit{
     @extend .topBtn;
+}
+.title{
+    font-size: 1em;
 }
 </style>
