@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="card c-card">
-        <div v-if="!details" v-on:mouseenter="showDetails()" class="card-body c-card-body" v-bind:class="stCardClasses[task.stList.indexOf(task.status)]">
+        <div v-if="!details" v-on:click="showDetails()" class="card-body c-card-body" v-bind:class="stCardClasses[task.stList.indexOf(task.status)]">
             <span class="title mb-1">{{title}}</span>
             <div class="badge badge-dark c-badge float-right">{{task.points}}</div>
         </div>
@@ -103,15 +103,17 @@ export default {
         nextStatus: function(){
             this.task.status = previous(this.task.status, this.task.stList);
         },
-        save: function(){
-            // TODO send data
-            this.readOnly = true;
-        },
         edit: function() {
             this.readOnly = false;
         },
+        save: function(){
+            // TODO send data
+            this.readOnly = true;
+            hideDetails();
+        },
         cancel: function(){
             this.readOnly = true;
+            hideDetails();
         }
     }
 }

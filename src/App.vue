@@ -1,12 +1,12 @@
 <template>
-  <div id="app">
+  <div id="app" class="h-100 d-flex flex-column">
     <Header></Header>
-    <CategoriesNav></CategoriesNav>
-    <div class='container'>
-      <div class="row">
-        <Container class="">
-          <Draggable>
-            <TaskWindow v-if="showTaskInfo" id="task-window" v-bind:initTask="initTask"></TaskWindow>
+    <div class="container-fluid d-flex h-100">
+      <div class="row flex-fill">
+        <CategoriesNav></CategoriesNav>
+        <Container class="task-container">
+          <Draggable v-for="(task, index) of tasks" v-bind:key="index" class='mb-2'>
+            <TaskWindow v-bind:initTask="task"></TaskWindow>
           </Draggable>
         </Container>
       </div>
@@ -31,8 +31,22 @@ export default {
   },
   data: function() {
     return {
-      showTaskInfo: true,
-      initTask: (new Task())
+      tasks:[
+        new Task({'title': 1}),
+        new Task({'title': 2}),
+        new Task({'title': 3}),
+        new Task({'title': 4}),
+        new Task({'title': 5}),
+        new Task({'title': 6}),
+        new Task({'title': 7}),
+        new Task({'title': 8}),
+        new Task({'title': 9}),
+        new Task({'title': 10}),
+        new Task({'title': 11}),
+        new Task({'title': 12}),
+        new Task({'title': 13}),
+        new Task({'title': 14})
+      ]
     };
   }
 };
@@ -43,12 +57,17 @@ export default {
 
 html {
   height: 100%;
+  overflow: hidden;
 }
 body {
   margin: 0;
   height: 100%;
+  overflow: hidden;
 }
-#app {
-  padding: 0px;
+.task-container{
+  width: 320px;
+  display: inline-block;
+  padding: 10px;
+  overflow-y: scroll;
 }
 </style>

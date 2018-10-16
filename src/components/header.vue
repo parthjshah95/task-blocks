@@ -14,12 +14,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header {
-  background: #565656;
-  width: 100%;
-  height: 50px;
-}
-.text {
-  color: white;
-}
 </style>
